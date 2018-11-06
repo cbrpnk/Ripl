@@ -1,13 +1,11 @@
 #include <stdlib.h>
 #include "synth.h"
 
-Ripl_Synth *ripl_synth_init(Ripl *ripl, unsigned int mixer_channel)
+Ripl_Synth *ripl_synth_init(Ripl *ripl)
 {
     Ripl_Synth *synth = (Ripl_Synth *) malloc(sizeof(Ripl_Synth));
     
     ripl_module_init(ripl, &synth->module, ripl_synth_process);
-    ripl_mixer_add(&ripl->mixer, mixer_channel, (Ripl_Module *) synth);
-    
     return synth;
 }
 

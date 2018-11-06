@@ -15,10 +15,11 @@ int main(int arch, char **argv)
     signal(SIGINT, signal_handler);
     
     Ripl *ripl = ripl_init(44100, 256); // Sampling rate, buffer size
-    Ripl_Synth *synth = ripl_synth_init(ripl, 0); // Ripl state, mixer channel
+    Ripl_Synth *synth = ripl_synth_init(ripl);
     
     synth->dummy = 1;
     
+    ripl_mixer_add(&ripl->mixer, 0, (Ripl_Module *) synth);
     ripl_play(ripl);
     while(running) sleep(1);
     ripl_cleanup(ripl);
