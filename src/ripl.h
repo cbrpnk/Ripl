@@ -29,6 +29,6 @@ int   ripl_callback(const void *input, void *output, unsigned long n_frames,
 Ripl_Module *ripl_add_module(Ripl *ripl, Ripl_Module_Type type,  unsigned int channel);
 
 // Adds different modules and returns a nice pointer to the specific modules
-Ripl_Synth *ripl_add_synth(Ripl *ripl,  unsigned int channel);
+Ripl_Synth *ripl_add_synth(Ripl *ripl, unsigned int channel);
 
 #endif

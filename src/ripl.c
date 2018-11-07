@@ -73,7 +73,7 @@ Ripl_Module *ripl_add_module(Ripl *ripl, Ripl_Module_Type type, unsigned int cha
     Ripl_Module *module = NULL;
     switch(type) {
     case RIPL_SYNTH:
-        module = (Ripl_Module *) ripl_synth_init(ripl);
+        module = (Ripl_Module *) ripl_synth_init();
         break;
     default:
         return NULL;
