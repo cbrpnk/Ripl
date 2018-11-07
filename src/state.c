@@ -59,3 +59,9 @@ int ripl_callback(const void *input, void *output, unsigned long n_frames, void 
     }
     return 0;
 }
+
+int ripl_add(Ripl *ripl, void *module, unsigned int channel)
+{
+    ripl_mixer_add(&ripl->mixer, channel, (Ripl_Module *) module);
+    return 0;
+}

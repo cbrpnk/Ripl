@@ -5,7 +5,7 @@
 
 typedef struct Ripl_Synth {
     Ripl_Module module;
-    unsigned char dummy; // TODO Replace me
+    unsigned char dummy;
 } Ripl_Synth;
 
 Ripl_Synth *ripl_synth_init(Ripl *ripl);

@@ -3,6 +3,9 @@
 
 #include "backend/backend.h"
 #include "mixer.h"
+#include "modules/synth.h"
+
+#define RIPL_MAX_MODULES 256 // TODO Make that infinite
 
 typedef struct Ripl {
     unsigned int playing;
@@ -18,5 +21,7 @@ int   ripl_play(Ripl *ripl);
 int   ripl_stop(Ripl *ripl);
 int   ripl_callback(const void *input, void *output, unsigned long n_frames,
                     void *user_data);
+
+int ripl_add(Ripl *ripl, void *module, unsigned int channel);
 
 #endif

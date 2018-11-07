@@ -14,14 +14,19 @@ int main(int arch, char **argv)
 {
     signal(SIGINT, signal_handler);
     
-    Ripl *ripl = ripl_init(44100, 256); // Sampling rate, buffer size
+    Ripl *ripl = ripl_init(44100, 256);         // Sampling rate, buffer size
+    Ripl_Mixer *mixer = &ripl->mixer;
     Ripl_Synth *synth = ripl_synth_init(ripl);
+    // Ripl_Synth *synth = ripl_add_synth(ripl, 0); // TODO make ripl manage modules
     
     synth->dummy = 1;
     
-    ripl_mixer_add(&ripl->mixer, 0, (Ripl_Module *) synth);
+    ripl_add(ripl, synth, 0);
     ripl_play(ripl);
+    
+    
     while(running) sleep(1);
+    ripl_synth_cleanup(synth);
     ripl_cleanup(ripl);
     return 0;
 }
