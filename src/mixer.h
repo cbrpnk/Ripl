@@ -1,7 +1,7 @@
 #ifndef RIPL_MIXER_H
 #define RIPL_MIXER_H
 
-#include "module.h"
+#include "modules/module.h"
 
 #define RIPL_MIXER_MODULES_PER_CHANNEL 8
 #define RIPL_MIXER_CHANNEL             32

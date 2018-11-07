@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "state.h"
+#include "ripl.h"
 
 Ripl *ripl_init(unsigned int sampling_rate, unsigned int buffer_size)
 {
