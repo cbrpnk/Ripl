@@ -5,7 +5,7 @@ Ripl_Synth *ripl_synth_init(Ripl *ripl)
 {
     Ripl_Synth *synth = (Ripl_Synth *) malloc(sizeof(Ripl_Synth));
     
-    ripl_module_init(ripl, &synth->module, ripl_synth_process);
+    ripl_module_init(ripl, RIPL_SYNTH, &synth->module, ripl_synth_process);
     return synth;
 }
 

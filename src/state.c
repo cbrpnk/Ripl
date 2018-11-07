@@ -24,6 +24,13 @@ int ripl_cleanup(Ripl *ripl)
     ripl_stop(ripl);
     ripl_backend_close_device(&ripl->backend);
     ripl_backend_cleanup(&ripl->backend);
+    for(int i=0; i<ripl->n_modules; ++i) {
+        switch(ripl->modules[i]->type) {
+        case RIPL_SYNTH:
+            ripl_synth_cleanup((Ripl_Synth *) ripl->modules[i]);
+            break;
+        }
+    }
     free(ripl);
     return 0;
 }
@@ -60,8 +67,24 @@ int ripl_callback(const void *input, void *output, unsigned long n_frames, void 
     return 0;
 }
 
-int ripl_add(Ripl *ripl, void *module, unsigned int channel)
+Ripl_Module *ripl_add_module(Ripl *ripl, Ripl_Module_Type type, unsigned int channel)
 {
-    ripl_mixer_add(&ripl->mixer, channel, (Ripl_Module *) module);
-    return 0;
+    Ripl_Module *module = NULL;
+    switch(type) {
+    case RIPL_SYNTH:
+        module = (Ripl_Module *) ripl_synth_init(ripl);
+        break;
+    default:
+        return NULL;
+    }
+    ripl->modules[ripl->n_modules] = module;
+    ripl->n_modules++;
+    ripl_mixer_add(&ripl->mixer, channel, module);
+    return module;
+
+}
+
+Ripl_Synth *ripl_add_synth(Ripl *ripl, unsigned int channel)
+{
+    return (Ripl_Synth *) ripl_add_module(ripl, RIPL_SYNTH, channel);
 }
