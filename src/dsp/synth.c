@@ -1,15 +1,14 @@
 #include <stdlib.h>
 #include "synth.h"
 
-Ripl_Dsp_Synth *ripl_dsp_synth_init()
+int ripl_dsp_synth_init(Ripl_Dsp_Synth *synth)
 {
-    Ripl_Dsp_Synth *synth = (Ripl_Dsp_Synth *) malloc(sizeof(Ripl_Dsp_Synth));
-    return synth;
+    synth->dummy = 0;
+    return 0;
 }
 
 int ripl_dsp_synth_cleanup(Ripl_Dsp_Synth *synth)
 {
-    free(synth);
     return 0;
 }
 

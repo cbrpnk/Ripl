@@ -11,8 +11,8 @@ typedef struct Ripl_Module {
     int on;
 } Ripl_Module;
 
-int ripl_module_init(Ripl_Module_Type type, Ripl_Module *module,
-                     int (*process_func)(void *data, float *output, unsigned long nFrames));
+int ripl_module_init(Ripl_Module *module, Ripl_Module_Type type,
+                     int (process_func)(void*, float*, unsigned long));
 int ripl_module_cleanup(Ripl_Module *module);
 
 #endif

@@ -8,8 +8,9 @@ typedef struct Ripl_Sytnh {
     Ripl_Module module;
     Ripl_Dsp_Synth params;
 } Ripl_Synth;
-Ripl_Synth *ripl_synth_init();
-int         ripl_synth_cleanup(Ripl_Synth *synth);
+
+int ripl_synth_init(Ripl_Synth *synth);
+int ripl_synth_cleanup(Ripl_Synth *synth);
 
 
 #endif
