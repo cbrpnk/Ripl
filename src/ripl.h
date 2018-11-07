@@ -2,6 +2,6 @@
 #define RIPL_RIPL_H
 
 #include "state.h"
-#include "modules/synth.h"
+#include "module.h"
 
 #endif

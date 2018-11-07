@@ -3,7 +3,7 @@ default:
 	src/mixer.c \
 	src/backend/backend.c \
 	src/state.c \
-	src/modules/module.c \
-	src/modules/synth.c \
+	src/module.c \
+	src/dsp/synth.c \
 	main.c \
 	&& ./ripl

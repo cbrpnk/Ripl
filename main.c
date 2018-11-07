@@ -17,7 +17,7 @@ int main(int arch, char **argv)
     Ripl *ripl = ripl_init(44100, 256);         // Sampling rate, buffer size
     Ripl_Synth *synth = ripl_add_synth(ripl, 0);
     
-    synth->dummy = 1;
+    synth->params.dummy = 1;
     
     ripl_play(ripl);
     while(running) sleep(1);

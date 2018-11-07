@@ -27,7 +27,8 @@ int ripl_cleanup(Ripl *ripl)
     for(int i=0; i<ripl->n_modules; ++i) {
         switch(ripl->modules[i]->type) {
         case RIPL_SYNTH:
-            ripl_synth_cleanup((Ripl_Synth *) ripl->modules[i]);
+            // TODO incorect
+            ripl_dsp_synth_cleanup((Ripl_Dsp_Synth *) ripl->modules[i]);
             break;
         }
     }
