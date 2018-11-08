@@ -6,7 +6,7 @@
 
 typedef struct Ripl_Sytnh {
     Ripl_Module module;
-    Ripl_Dsp_Synth params;
+    Dsp_Synth params;
 } Ripl_Synth;
 
 int ripl_synth_init(Ripl_Synth *synth, unsigned int sample_rate);
