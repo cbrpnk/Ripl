@@ -2,7 +2,8 @@
 #define RIPL_DSP_SYNTH_H
 
 typedef struct Ripl_Dsp_Synth {
-    unsigned char dummy;
+    float phase;
+    float freq;
 } Ripl_Dsp_Synth;
 
 int ripl_dsp_synth_init(Ripl_Dsp_Synth *synth);

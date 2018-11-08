@@ -5,7 +5,7 @@
 #include "mixer.h"
 #include "modules/synth.h"
 
-#define RIPL_MAX_MODULES 256 // TODO Make that infinite
+#define RIPL_MAX_MODULES 256
 
 typedef struct Ripl {
     unsigned int playing;

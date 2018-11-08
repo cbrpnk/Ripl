@@ -63,7 +63,7 @@ int ripl_callback(const void *input, void *output, unsigned long n_frames, void 
             for(int sl=0; sl<(channel->n_modules); ++sl) {
                 Ripl_Module *module = channel->modules[sl];
                 if(module && module->on) {
-                    module->process_func(module, out, n_frames);
+                    module->process_func(module->params, out, n_frames);
                 }
             }
         }
