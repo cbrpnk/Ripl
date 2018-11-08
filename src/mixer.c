@@ -1,7 +1,11 @@
+#include <stdlib.h>
 #include "mixer.h"
 
-int ripl_mixer_init(Ripl_Mixer *mixer)
+int ripl_mixer_init(Ripl_Mixer *mixer, unsigned int sample_rate)
 {
+    mixer->sample_rate = sample_rate;
+    
+    // Setup channels
     for(int i=0; i<RIPL_MIXER_CHANNEL; ++i) {
         for(int j=0; j<RIPL_MIXER_MODULES_PER_CHANNEL; ++j) {
             mixer->ch[i].n_modules = 0;
@@ -10,14 +14,36 @@ int ripl_mixer_init(Ripl_Mixer *mixer)
     return 0;
 }
 
-int ripl_mixer_add(Ripl_Mixer *mixer, unsigned int channel, Ripl_Module* module)
+int ripl_mixer_cleanup(Ripl_Mixer *mixer)
 {
-    // TODO Remove limit on modules
-    Ripl_Mixer_Channel *ch = &(mixer->ch[channel]);
-    if(ch->n_modules < RIPL_MIXER_MODULES_PER_CHANNEL) {
-        ch->modules[ch->n_modules] = module;
-        ch->n_modules++;
+    for(int i=0; i<RIPL_MIXER_CHANNEL; ++i) {
+        Ripl_Mixer_Channel *ch = &(mixer->ch[i]);
+        for(int j=0; j<ch->n_modules; ++j) {
+            Ripl_Module *module = ch->modules[i];
+            switch(module->type) {
+            case RIPL_SYNTH:
+                ripl_synth_cleanup((Ripl_Synth *) module);
+                free(module);
+                break;
+            }
+        }
     }
     
     return 0;
+}
+
+Ripl_Synth *ripl_mixer_add_synth(Ripl_Mixer *mixer, unsigned int channel)
+{
+    Ripl_Mixer_Channel *ch = &(mixer->ch[channel]);
+    Ripl_Synth *synth = NULL;
+    
+    if(ch->n_modules < RIPL_MIXER_MODULES_PER_CHANNEL) {
+        synth = (Ripl_Synth *) malloc(sizeof(Ripl_Synth));
+        ripl_synth_init(synth, mixer->sample_rate);
+        
+        ch->modules[ch->n_modules] = (Ripl_Module *) synth;
+        ch->n_modules++;
+    }
+    
+    return synth;
 }

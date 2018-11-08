@@ -1,5 +1,5 @@
-#ifndef RIPL_MODULE_SYNTH_H
-#define RIPL_MODULE_SYNTH_H
+#ifndef RIPL_SYNTH_H
+#define RIPL_SYNTH_H
 
 #include "module.h"
 #include "../dsp/synth.h"

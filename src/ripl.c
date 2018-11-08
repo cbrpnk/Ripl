@@ -12,7 +12,7 @@ Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size)
     ripl->sample_rate = sample_rate;
     ripl->buffer_size = buffer_size;
     
-    ripl_mixer_init(&ripl->mixer);
+    ripl_mixer_init(&ripl->mixer, sample_rate);
     
     ripl_backend_init(&ripl->backend, ripl_callback, (void *) ripl);
     ripl_backend_open_device(&ripl->backend, ripl->sample_rate, ripl->buffer_size);
@@ -24,16 +24,7 @@ int ripl_cleanup(Ripl *ripl)
     ripl_stop(ripl);
     ripl_backend_close_device(&ripl->backend);
     ripl_backend_cleanup(&ripl->backend);
-    
-    for(int i=0; i<ripl->n_modules; ++i) {
-        Ripl_Module *module = ripl->modules[i];
-        switch(ripl->modules[i]->type) {
-        case RIPL_SYNTH:
-            ripl_synth_cleanup((Ripl_Synth *) module);
-            free(module);
-            break;
-        }
-    }
+    ripl_mixer_cleanup(&ripl->mixer);
     
     free(ripl);
     return 0;
@@ -69,20 +60,4 @@ int ripl_callback(const void *input, void *output, unsigned long n_frames, void 
         }
     }
     return 0;
-}
-
-int ripl_add_module(Ripl *ripl, Ripl_Module* module, unsigned int channel)
-{
-    ripl->modules[ripl->n_modules] = module;
-    ripl->n_modules++;
-    ripl_mixer_add(&ripl->mixer, channel, module);
-    return 0;
-}
-
-Ripl_Synth *ripl_add_synth(Ripl *ripl, unsigned int channel)
-{
-    Ripl_Synth *synth = (Ripl_Synth *) malloc(sizeof(Ripl_Synth));
-    ripl_synth_init(synth, ripl->sample_rate);
-    ripl_add_module(ripl, (Ripl_Module *) synth, channel);
-    return synth;
 }
