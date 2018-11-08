@@ -14,7 +14,7 @@ int main(int arch, char **argv)
 {
     signal(SIGINT, signal_handler);
     
-    Ripl *ripl = ripl_init(44100, 256);         // Sample rate, buffer size
+    Ripl *ripl = ripl_init(44100, 256);
     Ripl_Mixer *mixer = &ripl->mixer;
     Ripl_Synth *synth = ripl_mixer_add_synth(mixer, 0);
     

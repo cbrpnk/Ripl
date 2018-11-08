@@ -20,8 +20,11 @@ typedef struct Ripl_Mixer {
 
 int ripl_mixer_init(Ripl_Mixer *mixer, unsigned int sample_rate);
 int ripl_mixer_cleanup(Ripl_Mixer *mixer);
+int ripl_mixer_process(Ripl_Mixer *mixer, const float* input, float *output,
+                       unsigned long n_frames);
 
 // Add Modules
 Ripl_Synth *ripl_mixer_add_synth(Ripl_Mixer *mixer, unsigned int channel);
+
 
 #endif
