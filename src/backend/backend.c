@@ -27,12 +27,12 @@ int ripl_backend_cleanup(Ripl_Backend *backend)
     return 0;
 }
 
-int ripl_backend_open_device(Ripl_Backend *backend, unsigned int sampling_rate,
+int ripl_backend_open_device(Ripl_Backend *backend, unsigned int sample_rate,
                              unsigned int buffer_size)
 {
     PaError err;
     
-    err = Pa_OpenDefaultStream(&backend->stream, 0, 2, paFloat32, sampling_rate,
+    err = Pa_OpenDefaultStream(&backend->stream, 0, 2, paFloat32, sample_rate,
                                buffer_size, ripl_backend_callback, backend);
     if(err != paNoError) {
         printf("ripl_backend_open_device error: %s\n", Pa_GetErrorText(err));

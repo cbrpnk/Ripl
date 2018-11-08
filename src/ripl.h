@@ -9,7 +9,7 @@
 
 typedef struct Ripl {
     unsigned int playing;
-    unsigned int sampling_rate;
+    unsigned int sample_rate;
     unsigned int buffer_size;
     Ripl_Module *modules[RIPL_MAX_MODULES];
     unsigned int n_modules;

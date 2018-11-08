@@ -3,19 +3,19 @@
 
 #include "ripl.h"
 
-Ripl *ripl_init(unsigned int sampling_rate, unsigned int buffer_size)
+Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size)
 {
     srand(time(NULL));
     
     Ripl *ripl = (Ripl*) malloc(sizeof(Ripl));
     ripl->playing = 0;
-    ripl->sampling_rate = sampling_rate;
+    ripl->sample_rate = sample_rate;
     ripl->buffer_size = buffer_size;
     
     ripl_mixer_init(&ripl->mixer);
     
     ripl_backend_init(&ripl->backend, ripl_callback, (void *) ripl);
-    ripl_backend_open_device(&ripl->backend, ripl->sampling_rate, ripl->buffer_size);
+    ripl_backend_open_device(&ripl->backend, ripl->sample_rate, ripl->buffer_size);
     return ripl;
 }
 
@@ -82,7 +82,7 @@ int ripl_add_module(Ripl *ripl, Ripl_Module* module, unsigned int channel)
 Ripl_Synth *ripl_add_synth(Ripl *ripl, unsigned int channel)
 {
     Ripl_Synth *synth = (Ripl_Synth *) malloc(sizeof(Ripl_Synth));
-    ripl_synth_init(synth);
+    ripl_synth_init(synth, ripl->sample_rate);
     ripl_add_module(ripl, (Ripl_Module *) synth, channel);
     return synth;
 }

@@ -13,7 +13,7 @@ int ripl_backend_init(Ripl_Backend *backend,
                       int (*user_callback)(const void*, void*, unsigned long, void*),
                       void *user_data);
 int ripl_backend_cleanup(Ripl_Backend *backend);
-int ripl_backend_open_device(Ripl_Backend *backend, unsigned int sampling_rate,
+int ripl_backend_open_device(Ripl_Backend *backend, unsigned int sample_rate,
                       unsigned int buffer_size);
 int ripl_backend_close_device(Ripl_Backend *backend);
 int ripl_backend_callback(const void *input_buffer, void *output_buffer,

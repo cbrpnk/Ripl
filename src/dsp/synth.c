@@ -3,8 +3,9 @@
 #include <math.h>
 #include "synth.h"
 
-int ripl_dsp_synth_init(Ripl_Dsp_Synth *synth)
+int ripl_dsp_synth_init(Ripl_Dsp_Synth *synth, unsigned int sample_rate)
 {
+    synth->sample_rate = sample_rate;
     synth->phase = 0.0f;
     synth->freq = 120.0f;
     return 0;
@@ -19,11 +20,9 @@ int ripl_dsp_synth_process(void *data, float *output, unsigned long n_frames)
 {
     Ripl_Dsp_Synth *synth = (Ripl_Dsp_Synth *) data;
     
-    unsigned int sample_rate = 44100; // TODO Do not hardcode this
-    float phase_increment = (2.0f * M_PI * synth->freq) / sample_rate;
+    float phase_increment = (2.0f * M_PI * synth->freq) / synth->sample_rate;
     
     for(int i=0; i<n_frames; ++i) {
-        //float sample = (float) rand() / RAND_MAX;
         float sample = sin(synth->phase);
         synth->phase += phase_increment;
         
