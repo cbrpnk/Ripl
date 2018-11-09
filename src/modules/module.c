@@ -1,7 +1,7 @@
 #include "module.h"
 
 int ripl_module_init(Ripl_Module *module, Ripl_Module_Type type, void *params,
-                     int (process_func)(void*, float*, unsigned long))
+                     int (process_func)(void*, const float*, float*, unsigned long))
 {
     module->type = type;
     module->params = params;

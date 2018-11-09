@@ -8,12 +8,12 @@ typedef enum Ripl_Module_Type {
 typedef struct Ripl_Module {
     Ripl_Module_Type type;
     void *params;
-    int (*process_func)(void *data, float *output, unsigned long nFrames);
+    int (*process_func)(void*, const float*, float*, unsigned long);
     int on;
 } Ripl_Module;
 
 int ripl_module_init(Ripl_Module *module, Ripl_Module_Type type, void *params,
-                     int (process_func)(void*, float*, unsigned long));
+                     int (process_func)(void*, const float*, float*, unsigned long));
 int ripl_module_cleanup(Ripl_Module *module);
 
 #endif

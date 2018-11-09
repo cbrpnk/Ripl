@@ -17,7 +17,7 @@ int dsp_synth_cleanup(Dsp_Synth *synth)
     return 0;
 }
 
-int dsp_synth_process(void *data, float *output, unsigned long n_frames)
+int dsp_synth_process(void *data, const float *in, float *out, unsigned long n_frames)
 {
     Dsp_Synth *synth = (Dsp_Synth *) data;
     
@@ -27,8 +27,8 @@ int dsp_synth_process(void *data, float *output, unsigned long n_frames)
         float sample = sin(synth->phase);
         synth->phase += phase_increment;
         
-        output[i*2] = sample;
-        output[i*2+1] = sample;
+        out[i*2] = sample;
+        out[i*2+1] = sample;
     }
     return 0;
 }

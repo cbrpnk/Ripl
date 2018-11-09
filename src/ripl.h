@@ -18,7 +18,7 @@ Ripl *ripl_init();
 int   ripl_cleanup(Ripl *ripl);
 int   ripl_play(Ripl *ripl);
 int   ripl_stop(Ripl *ripl);
-int   ripl_callback(const void *input, void *output, unsigned long n_frames,
+int   ripl_callback(const void *in, void *out, unsigned long n_frames,
                     void *user_data);
 
 #endif

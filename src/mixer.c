@@ -32,17 +32,22 @@ int ripl_mixer_cleanup(Ripl_Mixer *mixer)
     return 0;
 }
 
-int ripl_mixer_process(Ripl_Mixer *mixer, const float* input, float *output,
+int ripl_mixer_process(Ripl_Mixer *mixer, const float* in, float *out,
                        unsigned long n_frames)
 {
     for(int ch=0; ch<RIPL_MIXER_CHANNEL; ++ch) {
         Ripl_Mixer_Channel *channel = &(mixer->ch[ch]);
+        
+        // Process channel
         for(int sl=0; sl<(channel->n_modules); ++sl) {
             Ripl_Module *module = channel->modules[sl];
             if(module && module->on) {
-                module->process_func(module->params, output, n_frames);
+                module->process_func(module->params, in, out, n_frames);
             }
         }
+        
+        // Process master channel
+        // TODO
     }
 }
 

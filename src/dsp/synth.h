@@ -9,6 +9,6 @@ typedef struct Dsp_Synth {
 
 int dsp_synth_init(Dsp_Synth *synth, unsigned int sample_rate);
 int dsp_synth_cleanup(Dsp_Synth *synth);
-int dsp_synth_process(void *synth, float *output, unsigned long n_frames);
+int dsp_synth_process(void *synth, const float *in, float *out, unsigned long n_frames);
 
 #endif
