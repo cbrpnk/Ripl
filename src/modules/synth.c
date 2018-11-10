@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "synth.h"
 
+#include "synth.h"
 
 int ripl_synth_init(Ripl_Synth *synth, Ripl_Module *module, unsigned int sample_rate)
 {
@@ -18,18 +18,18 @@ int ripl_synth_cleanup(Ripl_Synth *synth)
     return 0;
 }
 
-int ripl_synth_process(void *data, const float *in, float *out, unsigned long n_frames)
+int ripl_synth_process(void *data, const Ripl_Audio_Buffer *in, Ripl_Audio_Buffer *out)
 {
     Ripl_Synth *synth = (Ripl_Synth *) data;
     
     float phase_increment = (2.0f * M_PI * synth->freq) / synth->sample_rate;
     
-    for(int i=0; i<n_frames; ++i) {
+    for(int i=0; i<out->size; ++i) {
         float sample = sin(synth->phase);
         synth->phase += phase_increment;
         
-        out[i*2] = sample;
-        out[i*2+1] = sample;
+        out->buffer[i].left = sample;
+        out->buffer[i].right = sample;
     }
     return 0;
 }

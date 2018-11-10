@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "ripl.h"
+#include "audio.h"
 
 Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size)
 {
@@ -46,15 +47,18 @@ int ripl_stop(Ripl *ripl)
 int ripl_callback(const void *in, void *out, unsigned long n_frames, void *user_data)
 {
     Ripl *ripl = (Ripl *) user_data;
-    const float *input = (const float *) in;
-    float *output = (float *) out;
+    //const float *input = (const float *) in;
+    //float *output = (float *) out;
     
+    // Input
+    Ripl_Audio_Buffer in_buffer = {.size = n_frames, .buffer = (Ripl_Audio_Frame *) in};
+    Ripl_Audio_Buffer out_buffer = {.size = n_frames, .buffer = (Ripl_Audio_Frame *) out};
     
     // Silence buffer
-    memset(out, 0, sizeof(float) * n_frames * 2);
+    memset(out_buffer.buffer, 0, sizeof(Ripl_Audio_Frame) * n_frames);
     
     if(ripl->playing) {
-        ripl_mixer_process(&ripl->mixer, input, output, n_frames);
+        ripl_mixer_process(&ripl->mixer, &in_buffer, &out_buffer);
     }
     return 0;
 }

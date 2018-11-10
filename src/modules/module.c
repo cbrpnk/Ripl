@@ -4,7 +4,8 @@
 
 int ripl_module_init(Ripl_Module *module, Ripl_Module_Type type, unsigned int sample_rate,
                      unsigned int buffer_size,
-                     int (process_func)(void*, const float*, float*, unsigned long))
+                     int (process_func)(void*, const Ripl_Audio_Buffer*,
+                                        Ripl_Audio_Buffer*))
 {
     void *params;
     switch(type) {
@@ -16,7 +17,9 @@ int ripl_module_init(Ripl_Module *module, Ripl_Module_Type type, unsigned int sa
     module->type = type;
     module->params = params;
     // The buffer should be twice as big as buffer_size since we have 2 channels
-    module->output_buffer = (float *) malloc(sizeof(float) * buffer_size * 2);
+    module->output_buffer.size = buffer_size;
+    module->output_buffer.buffer = (Ripl_Audio_Frame *)
+                                   malloc(sizeof(Ripl_Audio_Frame) * buffer_size);
     module->process_func = process_func;
     module->on = 1;
     return 0;
@@ -31,6 +34,6 @@ int ripl_module_cleanup(Ripl_Module *module)
         break;
     }
         
-    free(module->output_buffer);
+    free(module->output_buffer.buffer);
     return 0;
 }

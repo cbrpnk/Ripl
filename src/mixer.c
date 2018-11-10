@@ -21,11 +21,11 @@ int ripl_mixer_cleanup(Ripl_Mixer *mixer)
     return 0;
 }
 
-int ripl_mixer_process(Ripl_Mixer *mixer, const float* in, float *out,
-                       unsigned long n_frames)
+int ripl_mixer_process(Ripl_Mixer *mixer, const Ripl_Audio_Buffer *in,
+                       Ripl_Audio_Buffer *out)
 {
     for(int i=0; i<RIPL_MIXER_CHANNEL; ++i) {
-        ripl_mixer_channel_process(&(mixer->ch[i]), in, out, n_frames);
+        ripl_mixer_channel_process(&(mixer->ch[i]), in, out);
     }
 }
 
