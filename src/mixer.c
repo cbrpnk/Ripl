@@ -18,14 +18,6 @@ int ripl_mixer_channel_cleanup(Ripl_Mixer_Channel *ch)
 {
     for(int i=0; i<ch->n_modules; ++i) {
         Ripl_Module *module = ch->modules[i];
-        
-        switch(module->type) {
-        case RIPL_SYNTH:
-            ripl_synth_cleanup((Ripl_Synth *) module->params);
-            free(module->params);
-            break;
-        }
-        
         ripl_module_cleanup(module);
         free(module);
     }
@@ -103,17 +95,13 @@ Ripl_Synth *ripl_mixer_add_synth(Ripl_Mixer *mixer, unsigned int channel)
 {
     Ripl_Mixer_Channel *ch = &(mixer->ch[channel]);
     Ripl_Module *module = NULL;
-    Ripl_Synth *synth = NULL;
     
     if(ch->n_modules < RIPL_MIXER_MODULES_PER_CHANNEL) {
-        synth = (Ripl_Synth *) malloc(sizeof(Ripl_Synth));
         module = (Ripl_Module *) malloc(sizeof(Ripl_Module));
-        ripl_synth_init(synth, mixer->sample_rate);
-        ripl_module_init(module, RIPL_SYNTH, (void *) synth, mixer->buffer_size,
-                         ripl_synth_process);
-        
+        ripl_module_init(module, RIPL_SYNTH,  mixer->sample_rate,
+                         mixer->buffer_size, ripl_synth_process);
         ripl_mixer_channel_add(ch, module);
     }
     
-    return synth;
+    return (Ripl_Synth *) module->params;
 }
