@@ -16,6 +16,7 @@ int ripl_module_init(Ripl_Module *module, Ripl_Module_Type type, unsigned int sa
     
     module->type = type;
     module->params = params;
+    module->input = NULL;
     // The buffer should be twice as big as buffer_size since we have 2 channels
     module->output_buffer.size = buffer_size;
     module->output_buffer.buffer = (Ripl_Audio_Frame *)
