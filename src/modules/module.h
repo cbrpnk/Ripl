@@ -1,8 +1,6 @@
 #ifndef RIPL_MODULE_H
 #define RIPL_MODULE_H
 
-#include "synth.h"
-
 typedef enum Ripl_Module_Type {
     RIPL_SYNTH = 0
 } Ripl_Module_Type;

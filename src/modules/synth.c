@@ -4,8 +4,9 @@
 #include "synth.h"
 
 
-int ripl_synth_init(Ripl_Synth *synth, unsigned int sample_rate)
+int ripl_synth_init(Ripl_Synth *synth, Ripl_Module *module, unsigned int sample_rate)
 {
+    synth->module = module;
     synth->sample_rate = sample_rate;
     synth->phase = 0.0f;
     synth->freq = 120.0f;

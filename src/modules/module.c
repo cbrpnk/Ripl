@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "module.h"
+#include "synth.h"
 
 int ripl_module_init(Ripl_Module *module, Ripl_Module_Type type, unsigned int sample_rate,
                      unsigned int buffer_size,
@@ -9,7 +10,7 @@ int ripl_module_init(Ripl_Module *module, Ripl_Module_Type type, unsigned int sa
     switch(type) {
     case RIPL_SYNTH:
         params = malloc(sizeof(Ripl_Synth));
-        ripl_synth_init((Ripl_Synth *) params, sample_rate);
+        ripl_synth_init((Ripl_Synth *) params, module, sample_rate);
     }
     
     module->type = type;
