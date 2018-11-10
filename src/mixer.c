@@ -37,7 +37,6 @@ int ripl_mixer_channel_add(Ripl_Mixer_Channel *ch, Ripl_Module *module)
     return 0;
 }
 
-#include <stdio.h>
 int ripl_mixer_channel_process(Ripl_Mixer_Channel *ch, const float *in, float *out,
                                unsigned int n_frames)
 {
