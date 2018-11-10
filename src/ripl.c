@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #include "ripl.h"
 
@@ -49,10 +50,8 @@ int ripl_callback(const void *in, void *out, unsigned long n_frames, void *user_
     float *output = (float *) out;
     
     
-    // clean the buffer
-    for(int i=0; i<n_frames*2; ++i) {
-        output[i] = 0;
-    }
+    // Silence buffer
+    memset(out, 0, sizeof(float) * n_frames * 2);
     
     if(ripl->playing) {
         ripl_mixer_process(&ripl->mixer, input, output, n_frames);
