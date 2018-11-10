@@ -12,7 +12,7 @@ Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size)
     ripl->sample_rate = sample_rate;
     ripl->buffer_size = buffer_size;
     
-    ripl_mixer_init(&ripl->mixer, sample_rate);
+    ripl_mixer_init(&ripl->mixer, sample_rate, buffer_size);
     
     ripl_backend_init(&ripl->backend, ripl_callback, (void *) ripl);
     ripl_backend_open_device(&ripl->backend, ripl->sample_rate, ripl->buffer_size);

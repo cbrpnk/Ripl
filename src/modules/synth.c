@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include "synth.h"
 
-int ripl_synth_init(Ripl_Synth *synth, unsigned int sample_rate)
+int ripl_synth_init(Ripl_Synth *synth, unsigned int sample_rate, unsigned int buffer_size)
 {
-    ripl_module_init(&synth->module, RIPL_SYNTH, &synth->params, dsp_synth_process);
+    ripl_module_init(&synth->module, RIPL_SYNTH, &synth->params, buffer_size,
+                     dsp_synth_process);
     dsp_synth_init(&synth->params, sample_rate);
     return 0;
 }

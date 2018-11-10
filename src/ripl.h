@@ -14,7 +14,7 @@ typedef struct Ripl {
     Ripl_Mixer   mixer;
 } Ripl;
 
-Ripl *ripl_init();
+Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size);
 int   ripl_cleanup(Ripl *ripl);
 int   ripl_play(Ripl *ripl);
 int   ripl_stop(Ripl *ripl);

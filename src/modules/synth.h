@@ -9,8 +9,7 @@ typedef struct Ripl_Sytnh {
     Dsp_Synth params;
 } Ripl_Synth;
 
-int ripl_synth_init(Ripl_Synth *synth, unsigned int sample_rate);
+int ripl_synth_init(Ripl_Synth *synth, unsigned int sample_rate, unsigned int buffer_size);
 int ripl_synth_cleanup(Ripl_Synth *synth);
-
 
 #endif
