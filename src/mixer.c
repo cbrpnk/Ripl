@@ -32,14 +32,14 @@ int ripl_mixer_process(Ripl_Mixer *mixer, const Ripl_Audio_Buffer *in,
 Ripl_Synth *ripl_mixer_add_synth(Ripl_Mixer *mixer, unsigned int channel)
 {
     Ripl_Mixer_Channel *ch = &(mixer->ch[channel]);
-    Ripl_Module *module = NULL;
     
     if(ch->n_modules < RIPL_MIXER_MODULES_PER_CHANNEL) {
-        module = (Ripl_Module *) malloc(sizeof(Ripl_Module));
+        Ripl_Module *module = (Ripl_Module *) malloc(sizeof(Ripl_Module));
         ripl_module_init(module, RIPL_SYNTH,  mixer->sample_rate,
                          mixer->buffer_size, ripl_synth_process);
         ripl_mixer_channel_add(ch, module);
+        return (Ripl_Synth *) module->params;
     }
     
-    return (Ripl_Synth *) module->params;
+    return NULL;
 }

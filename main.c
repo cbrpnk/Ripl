@@ -18,6 +18,10 @@ int main(int arch, char **argv)
     Ripl_Synth *synth = ripl_add_synth(ripl, 0);
     
     synth->freq = 120.0f;
+    /*
+    ripl_send(synth, delay);
+    ripl_out(delay);
+    */
     
     ripl_play(ripl);
     while(running) sleep(1);

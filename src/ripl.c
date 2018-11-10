@@ -47,10 +47,6 @@ int ripl_stop(Ripl *ripl)
 int ripl_callback(const void *in, void *out, unsigned long n_frames, void *user_data)
 {
     Ripl *ripl = (Ripl *) user_data;
-    //const float *input = (const float *) in;
-    //float *output = (float *) out;
-    
-    // Input
     Ripl_Audio_Buffer in_buffer = {.size = n_frames, .buffer = (Ripl_Audio_Frame *) in};
     Ripl_Audio_Buffer out_buffer = {.size = n_frames, .buffer = (Ripl_Audio_Frame *) out};
     
