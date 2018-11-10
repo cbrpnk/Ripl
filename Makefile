@@ -1,5 +1,5 @@
 default:
-	gcc -o ripl -lm -lportaudio -lasound -ljack -pthread \
+	gcc -g -o ripl -lm -lportaudio -lasound -ljack -pthread \
 	src/backend/backend.c \
 	src/dsp/synth.c \
 	src/modules/module.c \

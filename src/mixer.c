@@ -10,7 +10,7 @@ int ripl_mixer_channel_init(Ripl_Mixer_Channel *ch, unsigned int sample_rate,
 {
     ch->sample_rate = sample_rate;
     ch->n_modules = 0;
-    ch->input_buffer = (float *) malloc(sizeof(float) * buffer_size *2);
+    ch->output = NULL;
     return 0;
 }
 
@@ -26,19 +26,42 @@ int ripl_mixer_channel_cleanup(Ripl_Mixer_Channel *ch)
         }
     }
     
-    free(ch->input_buffer);
     return 0;
 }
 
 int ripl_mixer_channel_add(Ripl_Mixer_Channel *ch, Ripl_Module *module)
 {
-    // TODO
+    ch->modules[ch->n_modules] = module;
+    ch->n_modules++;
+    ch->output = module->output_buffer;
     return 0;
 }
 
-int ripl_mixer_channel_process(Ripl_Mixer_Channel *ch)
+#include <stdio.h>
+int ripl_mixer_channel_process(Ripl_Mixer_Channel *ch, const float *in, float *out,
+                               unsigned int n_frames)
 {
-    // TODO
+    // This pointer points to the channel input for the first itteration of the loop
+    // bellow. For each subsequent itteration it will point to the previous module's
+    // output_buffer
+    const float *in_ptr = in;
+    Ripl_Module *module;
+    
+    if(ch->n_modules > 0) {
+        for(int i=0; i<ch->n_modules; ++i) {
+            module = ch->modules[i];
+            if(module->on) {
+                module->process_func(module->params, in, module->output_buffer, n_frames);
+                in_ptr = module->output_buffer;
+            }
+        }
+        
+        // Sum the ouput into out, we overright the data alreay put in there by privous
+        // channels
+        for(int i=0; i<n_frames*2; ++i) {
+            out[i] += (ch->output)[i];
+        }
+    }
     return 0;
 }
 
@@ -62,32 +85,15 @@ int ripl_mixer_cleanup(Ripl_Mixer *mixer)
     for(int i=0; i<RIPL_MIXER_CHANNEL; ++i) {
         ripl_mixer_channel_cleanup(&(mixer->ch[i]));
     }
-    
     return 0;
 }
 
 int ripl_mixer_process(Ripl_Mixer *mixer, const float* in, float *out,
                        unsigned long n_frames)
 {
-    /*
-    for(int ch=0; ch<RIPL_MIXER_CHANNEL; ++ch) {
-        Ripl_Mixer_Channel *channel = &(mixer->ch[ch]);
-        
-        // Process channel
-        for(int sl=0; sl<(channel->n_modules); ++sl) {
-            Ripl_Module *module = channel->modules[sl];
-            if(module && module->on) {
-                // TODO The input (if not first module should be the previous module's
-                // output_buffer
-                module->process_func(module->params, in, module->output_buffer,
-                                     n_frames);
-            }
-        }
-        
-        // Process master channel
-        // TODO
+    for(int i=0; i<RIPL_MIXER_CHANNEL; ++i) {
+        ripl_mixer_channel_process(&(mixer->ch[i]), in, out, n_frames);
     }
-    */
 }
 
 Ripl_Synth *ripl_mixer_add_synth(Ripl_Mixer *mixer, unsigned int channel)
@@ -99,9 +105,7 @@ Ripl_Synth *ripl_mixer_add_synth(Ripl_Mixer *mixer, unsigned int channel)
         synth = (Ripl_Synth *) malloc(sizeof(Ripl_Synth));
         ripl_synth_init(synth, mixer->sample_rate, mixer->buffer_size);
         
-        ch->modules[ch->n_modules] = (Ripl_Module *) synth;
-        ch->n_modules++;
-        ch->output_buffer = synth->module.output_buffer;
+        ripl_mixer_channel_add(ch, (Ripl_Module *) synth);
     }
     
     return synth;

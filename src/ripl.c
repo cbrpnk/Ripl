@@ -45,9 +45,17 @@ int ripl_stop(Ripl *ripl)
 int ripl_callback(const void *in, void *out, unsigned long n_frames, void *user_data)
 {
     Ripl *ripl = (Ripl *) user_data;
+    const float *input = (const float *) in;
+    float *output = (float *) out;
+    
+    
+    // clean the buffer
+    for(int i=0; i<n_frames*2; ++i) {
+        output[i] = 0;
+    }
     
     if(ripl->playing) {
-        ripl_mixer_process(&ripl->mixer, (const float *) in, (float *) out, n_frames);
+        ripl_mixer_process(&ripl->mixer, input, output, n_frames);
     }
     return 0;
 }
