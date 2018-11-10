@@ -59,3 +59,8 @@ int ripl_callback(const void *in, void *out, unsigned long n_frames, void *user_
     }
     return 0;
 }
+
+Ripl_Synth *ripl_add_synth(Ripl *ripl, unsigned int ch)
+{
+    return ripl_mixer_add_synth(&ripl->mixer, ch);
+}

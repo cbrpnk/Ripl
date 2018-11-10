@@ -21,4 +21,7 @@ int   ripl_stop(Ripl *ripl);
 int   ripl_callback(const void *in, void *out, unsigned long n_frames,
                     void *user_data);
 
+// Add modules to mixer
+Ripl_Synth *ripl_add_synth(Ripl *ripl, unsigned int ch);
+
 #endif

@@ -15,9 +15,7 @@ int main(int arch, char **argv)
     signal(SIGINT, signal_handler);
     
     Ripl *ripl = ripl_init(44100, 256);
-    // TODO remove the need to manipulate mixer directly
-    Ripl_Mixer *mixer = &ripl->mixer;
-    Ripl_Synth *synth = ripl_mixer_add_synth(mixer, 0);
+    Ripl_Synth *synth = ripl_add_synth(ripl, 0);
     
     synth->freq = 120.0f;
     
