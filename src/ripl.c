@@ -38,6 +38,7 @@ int ripl_cleanup(Ripl *ripl)
 int ripl_play(Ripl *ripl, Ripl_Module *module)
 {
     ripl->output_module = module;
+    // TODO here build module call order
     ripl->playing = 1;
     return 0;
 }
@@ -57,16 +58,15 @@ int ripl_callback(const void *in, void *out, unsigned long n_frames, void *user_
     // Silence buffer
     memset(out_buffer.buffer, 0, sizeof(Ripl_Audio_Frame) * n_frames);
     
-    if(ripl->playing) {
-        // TODO Check if there is an output_module to ripl
-        
+    if(ripl->playing && ripl->output_module) {
         // Build Execution stack
-        Ripl_Module *stack[100]; // TODO find something better than to hardcode 100
+        // TODO find something better than to hardcode 100
+        Ripl_Module *stack[RIPL_MAX_MODULES];
         unsigned int stack_size = 0;
         
         stack[stack_size] = ripl->output_module;
-        ++stack_size;
         Ripl_Module *parent = stack[stack_size]->input;
+        ++stack_size;
         while(parent) {
             stack[stack_size] = parent;
             ++stack_size;
@@ -76,9 +76,6 @@ int ripl_callback(const void *in, void *out, unsigned long n_frames, void *user_
         // Execute Stack
         Ripl_Audio_Buffer *in_ptr = &in_buffer;
         for(int i=0; i<stack_size; ++i) {
-            // TODO The input buffer should be the output buffer of the previous 
-            // module if there was one or in_buffer if it's the first in the stack.
-
             if(i > 0) {
                 // If this is not the first module we want the input to be the previous
                 // modules output
