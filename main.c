@@ -19,7 +19,7 @@ int main(int arch, char **argv)
     
     synth->freq = 120.0f;
     
-    ripl_play(ripl, synth->module);
+    ripl_play(ripl, synth->node);
     while(running) sleep(1);
     ripl_cleanup(ripl);
     return 0;

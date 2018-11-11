@@ -13,7 +13,7 @@ Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size)
     ripl->playing = 0;
     ripl->sample_rate = sample_rate;
     ripl->buffer_size = buffer_size;
-    ripl->n_modules = 0;
+    ripl->n_nodes = 0;
     
     ripl_backend_init(&ripl->backend, ripl_callback, (void *) ripl);
     ripl_backend_open_device(&ripl->backend, ripl->sample_rate, ripl->buffer_size);
@@ -26,19 +26,19 @@ int ripl_cleanup(Ripl *ripl)
     ripl_backend_close_device(&ripl->backend);
     ripl_backend_cleanup(&ripl->backend);
     
-    for(int i=0; i<ripl->n_modules; ++i) {
-        ripl_module_cleanup(ripl->modules[i]);
-        free(ripl->modules[i]);
+    for(int i=0; i<ripl->n_nodes; ++i) {
+        ripl_node_cleanup(ripl->nodes[i]);
+        free(ripl->nodes[i]);
     }
     
     free(ripl);
     return 0;
 }
 
-int ripl_play(Ripl *ripl, Ripl_Module *module)
+int ripl_play(Ripl *ripl, Ripl_Node *node)
 {
-    ripl->output_module = module;
-    // TODO here build module call order
+    ripl->output_node = node;
+    // TODO here build node call order
     ripl->playing = 1;
     return 0;
 }
@@ -58,14 +58,14 @@ int ripl_callback(const void *in, void *out, unsigned long n_frames, void *user_
     // Silence buffer
     memset(out_buffer.buffer, 0, sizeof(Ripl_Audio_Frame) * n_frames);
     
-    if(ripl->playing && ripl->output_module) {
+    if(ripl->playing && ripl->output_node) {
         // Build Execution stack
         // TODO find something better than to hardcode 100
-        Ripl_Module *stack[RIPL_MAX_MODULES];
+        Ripl_Node *stack[RIPL_MAX_NODES];
         unsigned int stack_size = 0;
         
-        stack[stack_size] = ripl->output_module;
-        Ripl_Module *parent = stack[stack_size]->input;
+        stack[stack_size] = ripl->output_node;
+        Ripl_Node *parent = stack[stack_size]->input;
         ++stack_size;
         while(parent) {
             stack[stack_size] = parent;
@@ -77,8 +77,8 @@ int ripl_callback(const void *in, void *out, unsigned long n_frames, void *user_
         Ripl_Audio_Buffer *in_ptr = &in_buffer;
         for(int i=0; i<stack_size; ++i) {
             if(i > 0) {
-                // If this is not the first module we want the input to be the previous
-                // modules output
+                // If this is not the first node we want the input to be the previous
+                // nodes output
                 in_ptr = &(stack[i-1]->output_buffer);
             } 
             
@@ -87,7 +87,7 @@ int ripl_callback(const void *in, void *out, unsigned long n_frames, void *user_
         }
         
         // Copy output node into soundcard buffer
-        memcpy(out_buffer.buffer, ripl->output_module->output_buffer.buffer,
+        memcpy(out_buffer.buffer, ripl->output_node->output_buffer.buffer,
                n_frames * sizeof(Ripl_Audio_Frame));
     }
     return 0;
@@ -95,9 +95,9 @@ int ripl_callback(const void *in, void *out, unsigned long n_frames, void *user_
 
 Ripl_Synth *ripl_add_synth(Ripl *ripl)
 {
-    Ripl_Module *module = (Ripl_Module *) malloc(sizeof(Ripl_Module));
-    ripl->modules[ripl->n_modules++] = module;
-    ripl_module_init(module, RIPL_SYNTH,  ripl->sample_rate,
+    Ripl_Node *node = (Ripl_Node *) malloc(sizeof(Ripl_Node));
+    ripl->nodes[ripl->n_nodes++] = node;
+    ripl_node_init(node, RIPL_SYNTH,  ripl->sample_rate,
                      ripl->buffer_size, ripl_synth_process);
-    return (Ripl_Synth *) module->params;
+    return (Ripl_Synth *) node->params;
 }

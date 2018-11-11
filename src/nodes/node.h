@@ -1,29 +1,29 @@
-#ifndef RIPL_MODULE_H
-#define RIPL_MODULE_H
+#ifndef RIPL_NODE_H
+#define RIPL_NODE_H
 
 #include "../audio.h"
 
-typedef enum Ripl_Module_Type {
+typedef enum Ripl_Node_Type {
     RIPL_SYNTH = 0
-} Ripl_Module_Type;
+} Ripl_Node_Type;
 
 
 // Forward declaration;
-typedef struct Ripl_Module Ripl_Module;
+typedef struct Ripl_Node Ripl_Node;
 
-typedef struct Ripl_Module {
-    Ripl_Module_Type type;
+typedef struct Ripl_Node {
+    Ripl_Node_Type type;
     void *params;
     int (*process_func)(void*, const Ripl_Audio_Buffer*, Ripl_Audio_Buffer*);
-    Ripl_Module *input;
+    Ripl_Node *input;
     Ripl_Audio_Buffer output_buffer;
     int on;
-} Ripl_Module;
+} Ripl_Node;
 
-int ripl_module_init(Ripl_Module *module, Ripl_Module_Type type, unsigned int sample_rate,
+int ripl_node_init(Ripl_Node *node, Ripl_Node_Type type, unsigned int sample_rate,
                      unsigned int buffer_size,
                      int (process_func)(void*, const Ripl_Audio_Buffer*,
                                         Ripl_Audio_Buffer*));
-int ripl_module_cleanup(Ripl_Module *module);
+int ripl_node_cleanup(Ripl_Node *node);
 
 #endif
