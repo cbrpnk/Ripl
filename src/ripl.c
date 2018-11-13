@@ -4,6 +4,7 @@
 
 #include "ripl.h"
 #include "audio.h"
+#include "graph/osc/osc.h"
 
 Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size)
 {
@@ -79,9 +80,9 @@ Ripl_Node *ripl_master_out(Ripl *ripl)
     return &ripl->graph.master_out;
 }
 
-Ripl_Node *ripl_synth(Ripl *ripl)
+Ripl_Node *ripl_osc(Ripl *ripl)
 {
-    return ripl_add(ripl, RIPL_SYNTH);
+    return ripl_add(ripl, RIPL_OSC);
 }
 
 // Shortcut to ripl_node_send

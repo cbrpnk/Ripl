@@ -2,7 +2,7 @@
 #define RIPL_GRAPH_H
 
 #include "node.h"
-#include "synth/synth.h"
+#include "osc/osc.h"
 
 #define RIPL_MAX_NODES 256
 

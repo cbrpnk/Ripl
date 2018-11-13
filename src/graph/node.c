@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "node.h"
-#include "synth/synth.h"
+#include "osc/osc.h"
 #include "dummy/dummy.h"
 
 int ripl_node_init(Ripl_Node *node, Ripl_Node_Type type, unsigned int sample_rate,
@@ -14,11 +14,11 @@ int ripl_node_init(Ripl_Node *node, Ripl_Node_Type type, unsigned int sample_rat
         node->process_func = ripl_dummy_process;
         node->n_inputs = RIPL_DUMMY_IN_COUNT;
         break;
-    case RIPL_SYNTH:
-        node->obj = malloc(sizeof(Ripl_Synth));
-        ripl_synth_init((Ripl_Synth *) node->obj, sample_rate);
-        node->process_func = ripl_synth_process;
-        node->n_inputs = RIPL_SYNTH_IN_COUNT;
+    case RIPL_OSC:
+        node->obj = malloc(sizeof(Ripl_Osc));
+        ripl_osc_init((Ripl_Osc *) node->obj, sample_rate);
+        node->process_func = ripl_osc_process;
+        node->n_inputs = RIPL_OSC_IN_COUNT;
         break;
     }
     node->params = (float **) &node->obj;
@@ -38,8 +38,8 @@ int ripl_node_cleanup(Ripl_Node *node)
     case RIPL_DUMMY:
         ripl_dummy_cleanup((Ripl_Dummy *) node->obj);
         break;
-    case RIPL_SYNTH:
-        ripl_synth_cleanup((Ripl_Synth *) node->obj);
+    case RIPL_OSC:
+        ripl_osc_cleanup((Ripl_Osc *) node->obj);
         break;
     }
     

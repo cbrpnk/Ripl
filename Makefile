@@ -4,7 +4,7 @@ default:
 	src/graph/graph.c \
 	src/graph/node.c \
 	src/graph/dummy/dummy.c \
-	src/graph/synth/synth.c \
+	src/graph/osc/osc.c \
 	src/ripl.c \
 	main.c \
 	&& ./ripl

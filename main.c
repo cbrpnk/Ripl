@@ -16,10 +16,10 @@ int main(int arch, char **argv)
     
     Ripl      *ripl  = ripl_init(44100, 256);
     Ripl_Node *out   = ripl_master_out(ripl);
-    Ripl_Node *synth = ripl_synth(ripl);
+    Ripl_Node *osc = ripl_osc(ripl);
     
-    ripl_set(synth, RIPL_SYNTH_FREQ, 120.0f);
-    ripl_send(ripl, synth, out, 0); // TODO have a pointer to graph in node (dont pass ripl)
+    ripl_set(osc, RIPL_OSC_FREQ, 120.0f);
+    ripl_send(ripl, osc, out, 0); // TODO have a pointer to graph in node (dont pass ripl)
     
     ripl_play(ripl);
     while(running) sleep(1);

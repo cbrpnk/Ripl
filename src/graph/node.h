@@ -5,7 +5,7 @@
 
 typedef enum Ripl_Node_Type {
     RIPL_DUMMY = 0,
-    RIPL_SYNTH
+    RIPL_OSC
 } Ripl_Node_Type;
 
 // Forward declaration;
