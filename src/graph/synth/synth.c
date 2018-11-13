@@ -4,9 +4,11 @@
 
 #include "synth.h"
 
-int ripl_synth_init(Ripl_Synth *synth, Ripl_Node *node, unsigned int sample_rate)
+int ripl_synth_init(Ripl_Synth *synth, unsigned int sample_rate)
 {
-    synth->node = node;
+    // Params
+    synth->params[RIPL_SYNTH_FREQ] = &synth->freq;
+    
     synth->sample_rate = sample_rate;
     synth->phase = 0.0f;
     synth->freq = 120.0f;
@@ -18,7 +20,7 @@ int ripl_synth_cleanup(Ripl_Synth *synth)
     return 0;
 }
 
-int ripl_synth_process(void *data, const Ripl_Audio_Buffer *in, Ripl_Audio_Buffer *out)
+int ripl_synth_process(void *data, const Ripl_Audio_Buffer **in, Ripl_Audio_Buffer *out)
 {
     Ripl_Synth *synth = (Ripl_Synth *) data;
     

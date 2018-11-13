@@ -2,7 +2,7 @@
 #define RIPL_H
 
 #include "backend/backend.h"
-#include "nodes/synth.h"
+#include "graph/graph.h"
 
 #define RIPL_MAX_NODES 256
 
@@ -11,19 +11,26 @@ typedef struct Ripl {
     unsigned int sample_rate;
     unsigned int buffer_size;
     Ripl_Backend backend;
-    unsigned int n_nodes;
-    Ripl_Node *nodes[RIPL_MAX_NODES];
-    Ripl_Node *output_node;
+    Ripl_Graph   graph;
 } Ripl;
 
 Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size);
 int   ripl_cleanup(Ripl *ripl);
-int   ripl_play(Ripl *ripl, Ripl_Node *node);
+int   ripl_play(Ripl *ripl);
 int   ripl_stop(Ripl *ripl);
 int   ripl_callback(const void *in, void *out, unsigned long n_frames,
                     void *user_data);
 
 // Add nodes to mixer
-Ripl_Synth *ripl_add_synth(Ripl *ripl);
+Ripl_Node *ripl_add(Ripl *ripl, Ripl_Node_Type);
+Ripl_Node *ripl_master_in(Ripl *ripl);
+Ripl_Node *ripl_master_out(Ripl *ripl);
+Ripl_Node *ripl_synth(Ripl *ripl);
+
+// Shortcut to ripl_node_send
+int ripl_send(Ripl *ripl, Ripl_Node *source, Ripl_Node *dest, unsigned int dest_input);
+
+// Shortcut to ripl_node_set
+int ripl_set(Ripl_Node *node, unsigned int param, float value);
 
 #endif
