@@ -14,7 +14,7 @@ typedef enum Ripl_Osc_Param {
 } Ripl_Osc_Param;
 
 typedef struct Ripl_Osc {
-    Ripl_Param  *params[RIPL_OSC_PARAM_COUNT];
+    Ripl_Param *params[RIPL_OSC_PARAM_COUNT];
     Ripl_Param freq;
     unsigned int sample_rate;
     float phase;

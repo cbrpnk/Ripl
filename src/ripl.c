@@ -9,7 +9,7 @@ Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size)
 {
     srand(time(NULL));
     
-    Ripl *ripl = (Ripl*) malloc(sizeof(Ripl));
+    Ripl *ripl = malloc(sizeof(Ripl));
     ripl->playing = 0;
     
     ripl_backend_init(&ripl->backend, ripl_callback, (void *) ripl);

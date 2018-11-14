@@ -10,7 +10,6 @@
 // Manages Ripl_Nodes and computes the signal that goes through them
 //
 typedef struct Ripl_Graph {
-    // TODO It might be a better idea to have a reference to Ripl
     unsigned int sample_rate;
     unsigned int buffer_size;
     // All the nodes we manage
