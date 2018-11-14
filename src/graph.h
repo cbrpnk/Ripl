@@ -4,6 +4,7 @@
 #include "node.h"
 
 #define RIPL_MAX_NODES 256
+#define RIPL_MAX_SIGNAL_PATH RIPL_MAX_NODES+2 // + master_in and master_out
 
 //
 // Ripl_Graph
@@ -17,7 +18,7 @@ typedef struct Ripl_Graph {
     Ripl_Node *nodes[RIPL_MAX_NODES];
     // Ordered nodes that should be processed when calling ripl_graph_process
     unsigned int signal_path_length;
-    Ripl_Node *signal_path[RIPL_MAX_NODES+2]; // +2 for master_in and master_out
+    Ripl_Node *signal_path[RIPL_MAX_SIGNAL_PATH];
     // Where the signal graph touches the external world
     Ripl_Node master_in;
     Ripl_Node master_out;

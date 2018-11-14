@@ -82,5 +82,5 @@ int ripl_send(Ripl_Node *source, Ripl_Node *dest, unsigned int dest_input)
 // Shortcut to ripl_node_set
 int ripl_set(Ripl_Node *node, unsigned int param, float value)
 {
-    return ripl_node_set(node, param, value);
+    return ripl_node_set_param(node, param, value);
 }

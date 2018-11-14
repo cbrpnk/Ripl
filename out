@@ -1,0 +1,138 @@
+In file included from src/processors/osc.c:2:
+src/processors/osc.h:6:9: error: unknown type name ‘Ripl_Processor’
+ typedef Ripl_Processor Ripl_Processor;
+         ^~~~~~~~~~~~~~
+src/processors/osc.c: In function ‘ripl_processor_osc_init’:
+src/processors/osc.c:6:14: error: request for member ‘obj’ in something not a structure or union
+     processor->obj = malloc(sizeof(Ripl_Osc));
+              ^~
+src/processors/osc.c:7:41: error: request for member ‘obj’ in something not a structure or union
+     ripl_osc_init((Ripl_Osc *) processor->obj, sample_rate);
+                                         ^~
+src/processors/osc.c:8:14: error: request for member ‘process_func’ in something not a structure or union
+     processor->process_func = ripl_osc_process;
+              ^~
+src/processors/osc.c:9:14: error: request for member ‘n_inputs’ in something not a structure or union
+     processor->n_inputs = RIPL_OSC_IN_COUNT;
+              ^~
+src/processors/osc.c:12:14: error: request for member ‘params’ in something not a structure or union
+     processor->params = malloc(RIPL_OSC_PARAM_COUT * sizeof(Ripl_Param *));
+              ^~
+src/processors/osc.c:12:32: error: ‘RIPL_OSC_PARAM_COUT’ undeclared (first use in this function); did you mean ‘RIPL_OSC_PARAM_COUNT’?
+     processor->params = malloc(RIPL_OSC_PARAM_COUT * sizeof(Ripl_Param *));
+                                ^~~~~~~~~~~~~~~~~~~
+                                RIPL_OSC_PARAM_COUNT
+src/processors/osc.c:12:32: note: each undeclared identifier is reported only once for each function it appears in
+src/processors/osc.c:13:14: error: request for member ‘params’ in something not a structure or union
+     processor->params[RIPL_OSC_FREQ] = (Ripl_Osc *) processor->obj;
+              ^~
+src/processors/osc.c:13:62: error: request for member ‘obj’ in something not a structure or union
+     processor->params[RIPL_OSC_FREQ] = (Ripl_Osc *) processor->obj;
+                                                              ^~
+In file included from src/processors/processor.h:5,
+                 from src/processors/processor.c:2:
+src/processors/osc.h:6:9: error: unknown type name ‘Ripl_Processor’
+ typedef Ripl_Processor Ripl_Processor;
+         ^~~~~~~~~~~~~~
+In file included from src/processors/processor.c:2:
+src/processors/processor.h:22:3: error: conflicting types for ‘Ripl_Processor’
+ } Ripl_Processor;
+   ^~~~~~~~~~~~~~
+In file included from src/processors/processor.h:5,
+                 from src/processors/processor.c:2:
+src/processors/osc.h:6:24: note: previous declaration of ‘Ripl_Processor’ was here
+ typedef Ripl_Processor Ripl_Processor;
+                        ^~~~~~~~~~~~~~
+src/processors/processor.c: In function ‘ripl_processor_init’:
+src/processors/processor.c:13:33: warning: passing argument 1 of ‘ripl_processor_osc_init’ from incompatible pointer type [-Wincompatible-pointer-types]
+         ripl_processor_osc_init(processor, sample_rate);
+                                 ^~~~~~~~~
+In file included from src/processors/processor.h:5,
+                 from src/processors/processor.c:2:
+src/processors/osc.h:13:45: note: expected ‘Ripl_Processor *’ {aka ‘int *’} but argument is of type ‘Ripl_Processor *’ {aka ‘struct Ripl_Processor *’}
+ int ripl_processor_osc_init(Ripl_Processor *processor, unsigned int sample_rate);
+                             ~~~~~~~~~~~~~~~~^~~~~~~~~
+In file included from src/processors/processor.h:5,
+                 from src/node.h:4,
+                 from src/graph.h:4,
+                 from src/graph.c:3:
+src/processors/osc.h:6:9: error: unknown type name ‘Ripl_Processor’
+ typedef Ripl_Processor Ripl_Processor;
+         ^~~~~~~~~~~~~~
+In file included from src/node.h:4,
+                 from src/graph.h:4,
+                 from src/graph.c:3:
+src/processors/processor.h:22:3: error: conflicting types for ‘Ripl_Processor’
+ } Ripl_Processor;
+   ^~~~~~~~~~~~~~
+In file included from src/processors/processor.h:5,
+                 from src/node.h:4,
+                 from src/graph.h:4,
+                 from src/graph.c:3:
+src/processors/osc.h:6:24: note: previous declaration of ‘Ripl_Processor’ was here
+ typedef Ripl_Processor Ripl_Processor;
+                        ^~~~~~~~~~~~~~
+In file included from src/processors/processor.h:5,
+                 from src/node.h:4,
+                 from src/node.c:2:
+src/processors/osc.h:6:9: error: unknown type name ‘Ripl_Processor’
+ typedef Ripl_Processor Ripl_Processor;
+         ^~~~~~~~~~~~~~
+In file included from src/node.h:4,
+                 from src/node.c:2:
+src/processors/processor.h:22:3: error: conflicting types for ‘Ripl_Processor’
+ } Ripl_Processor;
+   ^~~~~~~~~~~~~~
+In file included from src/processors/processor.h:5,
+                 from src/node.h:4,
+                 from src/node.c:2:
+src/processors/osc.h:6:24: note: previous declaration of ‘Ripl_Processor’ was here
+ typedef Ripl_Processor Ripl_Processor;
+                        ^~~~~~~~~~~~~~
+In file included from src/processors/processor.h:5,
+                 from src/node.h:4,
+                 from src/graph.h:4,
+                 from src/ripl.h:5,
+                 from src/ripl.c:5:
+src/processors/osc.h:6:9: error: unknown type name ‘Ripl_Processor’
+ typedef Ripl_Processor Ripl_Processor;
+         ^~~~~~~~~~~~~~
+In file included from src/node.h:4,
+                 from src/graph.h:4,
+                 from src/ripl.h:5,
+                 from src/ripl.c:5:
+src/processors/processor.h:22:3: error: conflicting types for ‘Ripl_Processor’
+ } Ripl_Processor;
+   ^~~~~~~~~~~~~~
+In file included from src/processors/processor.h:5,
+                 from src/node.h:4,
+                 from src/graph.h:4,
+                 from src/ripl.h:5,
+                 from src/ripl.c:5:
+src/processors/osc.h:6:24: note: previous declaration of ‘Ripl_Processor’ was here
+ typedef Ripl_Processor Ripl_Processor;
+                        ^~~~~~~~~~~~~~
+In file included from src/processors/processor.h:5,
+                 from src/node.h:4,
+                 from src/graph.h:4,
+                 from src/ripl.h:5,
+                 from main.c:4:
+src/processors/osc.h:6:9: error: unknown type name ‘Ripl_Processor’
+ typedef Ripl_Processor Ripl_Processor;
+         ^~~~~~~~~~~~~~
+In file included from src/node.h:4,
+                 from src/graph.h:4,
+                 from src/ripl.h:5,
+                 from main.c:4:
+src/processors/processor.h:22:3: error: conflicting types for ‘Ripl_Processor’
+ } Ripl_Processor;
+   ^~~~~~~~~~~~~~
+In file included from src/processors/processor.h:5,
+                 from src/node.h:4,
+                 from src/graph.h:4,
+                 from src/ripl.h:5,
+                 from main.c:4:
+src/processors/osc.h:6:24: note: previous declaration of ‘Ripl_Processor’ was here
+ typedef Ripl_Processor Ripl_Processor;
+                        ^~~~~~~~~~~~~~
+make: *** [Makefile:2: default] Error 1

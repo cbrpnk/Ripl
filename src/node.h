@@ -7,12 +7,18 @@
 typedef struct Ripl_Graph Ripl_Graph;
 typedef struct Ripl_Node Ripl_Node;
 
+typedef struct Ripl_Edge {
+    Ripl_Node *node;
+    unsigned int processor_input;
+} Ripl_Edge;
+
 // Represents a single node in a Ripl_Graph
 typedef struct Ripl_Node {
     Ripl_Graph *owner;
-    // Fixed length array of inputs in the same order than the processor inputs
-    Ripl_Node **inputs;
-    Ripl_Node **outputs;
+    unsigned int n_inputs;
+    unsigned int n_outputs;
+    Ripl_Edge *inputs;
+    Ripl_Edge *outputs;
     Ripl_Processor processor;
     int on;
 } Ripl_Node;
@@ -22,6 +28,11 @@ int ripl_node_cleanup(Ripl_Node *node);
 
 int ripl_node_process(Ripl_Node *node);
 int ripl_node_send(Ripl_Node *node, Ripl_Node *dest, unsigned int dest_input);
-int ripl_node_set(Ripl_Node *node, unsigned int param, float value);
+int ripl_node_add_input(Ripl_Node *node, Ripl_Node *target, unsigned int processor_input);
+int ripl_node_add_output(Ripl_Node *node, Ripl_Node *target, unsigned int processor_input);
+int ripl_node_set_param(Ripl_Node *node, unsigned int param, float value);
+
+int ripl_node_on(Ripl_Node *node);
+int ripl_node_off(Ripl_Node *node);
 
 #endif

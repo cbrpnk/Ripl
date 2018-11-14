@@ -3,6 +3,7 @@
 
 #include "backend/backend.h"
 #include "graph.h"
+#include "processors/osc.h"
 
 #define RIPL_MAX_NODES 256
 

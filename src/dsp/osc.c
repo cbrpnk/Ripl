@@ -6,8 +6,6 @@
 
 int ripl_osc_init(Ripl_Osc *osc, unsigned int sample_rate)
 {
-    // Params
-    osc->params[RIPL_OSC_FREQ] = &osc->freq;
     osc->freq = 120.0f;
     
     osc->sample_rate = sample_rate;

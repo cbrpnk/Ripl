@@ -4,10 +4,9 @@
 
 #include "dummy.h"
 
-int ripl_dummy_init(Ripl_Dummy *dummy)
+int ripl_dummy_init(Ripl_Dummy *dummy, unsigned int sample_rate)
 {
-    // Params
-    dummy->params[0] = &dummy->dummy;
+    dummy->sample_rate = sample_rate;
     dummy->dummy = 0;
     return 0;
 }
