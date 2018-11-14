@@ -9,9 +9,9 @@ typedef enum Ripl_Osc_Input {
 } Ripl_Osc_Input;
 
 typedef struct Ripl_Osc {
-    Ripl_Param freq;
     unsigned int sample_rate;
     float phase;
+    Ripl_Param freq;
 } Ripl_Osc;
 
 int ripl_osc_init(Ripl_Osc *osc, unsigned int sample_rate);

@@ -1,4 +1,1 @@
 Set pointers to NULL / calloc?
-
-Weird bug when the osc runs for more than 10s the frequency bumps up a cent and then
-stays there. Possibly comes from the dsp.
