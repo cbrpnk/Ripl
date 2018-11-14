@@ -45,19 +45,15 @@ int ripl_stop(Ripl *ripl)
     return 0;
 }
 
-int ripl_callback(const void *in, void *out, unsigned long n_frames, void *user_data)
+int ripl_callback(void *user_data, const Ripl_Audio_Buffer *in, Ripl_Audio_Buffer *out)
 {
-    // TODO Push that to backend
     Ripl *ripl = (Ripl *) user_data;
-    Ripl_Audio_Buffer in_buffer = {.size = n_frames, .buffer = (Ripl_Audio_Frame *) in};
-    Ripl_Audio_Buffer out_buffer = {.size = n_frames, .buffer = (Ripl_Audio_Frame *) out};
     
     // Silence buffer
-    memset(out_buffer.buffer, 0, sizeof(Ripl_Audio_Frame) * n_frames);
+    memset(out->buffer, 0, sizeof(Ripl_Audio_Frame) * out->size);
     
     if(ripl->playing) {
-        ripl_graph_process(&ripl->graph, (const Ripl_Audio_Buffer *) &in_buffer,
-                           &out_buffer);
+        ripl_graph_process(&ripl->graph, (const Ripl_Audio_Buffer *) in, out);
     }
     return 0;
 }

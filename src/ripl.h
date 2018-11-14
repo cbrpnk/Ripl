@@ -16,8 +16,7 @@ Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size);
 int   ripl_cleanup(Ripl *ripl);
 int   ripl_play(Ripl *ripl);
 int   ripl_stop(Ripl *ripl);
-int   ripl_callback(const void *in, void *out, unsigned long n_frames,
-                    void *user_data);
+int   ripl_callback(void *user_data, const Ripl_Audio_Buffer *in, Ripl_Audio_Buffer *out);
 
 // Add nodes to graph
 Ripl_Node *ripl_master_in(Ripl *ripl);

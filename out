@@ -1,0 +1,79 @@
+In file included from src/backend/backend.c:2:
+src/backend/backend.h:8:40: error: unknown type name ‘Ripl_Audio_Buffer’
+     int (*user_callback)(void *, const Ripl_Audio_Buffer*, Ripl_Audio_Buffer*),
+                                        ^~~~~~~~~~~~~~~~~
+src/backend/backend.h:8:60: error: unknown type name ‘Ripl_Audio_Buffer’
+     int (*user_callback)(void *, const Ripl_Audio_Buffer*, Ripl_Audio_Buffer*),
+                                                            ^~~~~~~~~~~~~~~~~
+src/backend/backend.h:10:1: warning: no semicolon at end of struct or union
+ } Ripl_Backend;
+ ^
+src/backend/backend.h:13:58: error: unknown type name ‘Ripl_Audio_Buffer’
+                       int (*user_callback)(void *, const Ripl_Audio_Buffer*,
+                                                          ^~~~~~~~~~~~~~~~~
+src/backend/backend.h:14:23: error: unknown type name ‘Ripl_Audio_Buffer’
+                       Ripl_Audio_Buffer*), void *user_data);
+                       ^~~~~~~~~~~~~~~~~
+src/backend/backend.h:14:44: error: expected ‘;’, ‘,’ or ‘)’ before ‘void’
+                       Ripl_Audio_Buffer*), void *user_data);
+                                            ^~~~
+src/backend/backend.c: In function ‘ripl_backend_init’:
+src/backend/backend.c:16:12: error: ‘Ripl_Backend’ {aka ‘struct Ripl_Backend’} has no member named ‘user_callback’
+     backend->user_callback = user_callback;
+            ^~
+src/backend/backend.c:17:12: error: ‘Ripl_Backend’ {aka ‘struct Ripl_Backend’} has no member named ‘user_data’
+     backend->user_data = user_data;
+            ^~
+src/backend/backend.c: In function ‘ripl_backend_callback’:
+src/backend/backend.c:72:19: error: ‘Ripl_Backend’ {aka ‘struct Ripl_Backend’} has no member named ‘user_callback’
+     return backend->user_callback(backend->user_data, in, out);
+                   ^~
+src/backend/backend.c:72:42: error: ‘Ripl_Backend’ {aka ‘struct Ripl_Backend’} has no member named ‘user_data’
+     return backend->user_callback(backend->user_data, in, out);
+                                          ^~
+In file included from src/ripl.h:4,
+                 from src/ripl.c:5:
+src/backend/backend.h:8:40: error: unknown type name ‘Ripl_Audio_Buffer’
+     int (*user_callback)(void *, const Ripl_Audio_Buffer*, Ripl_Audio_Buffer*),
+                                        ^~~~~~~~~~~~~~~~~
+src/backend/backend.h:8:60: error: unknown type name ‘Ripl_Audio_Buffer’
+     int (*user_callback)(void *, const Ripl_Audio_Buffer*, Ripl_Audio_Buffer*),
+                                                            ^~~~~~~~~~~~~~~~~
+src/backend/backend.h:10:1: warning: no semicolon at end of struct or union
+ } Ripl_Backend;
+ ^
+src/backend/backend.h:13:58: error: unknown type name ‘Ripl_Audio_Buffer’
+                       int (*user_callback)(void *, const Ripl_Audio_Buffer*,
+                                                          ^~~~~~~~~~~~~~~~~
+src/backend/backend.h:14:23: error: unknown type name ‘Ripl_Audio_Buffer’
+                       Ripl_Audio_Buffer*), void *user_data);
+                       ^~~~~~~~~~~~~~~~~
+src/backend/backend.h:14:44: error: expected ‘;’, ‘,’ or ‘)’ before ‘void’
+                       Ripl_Audio_Buffer*), void *user_data);
+                                            ^~~~
+src/ripl.c: In function ‘ripl_init’:
+src/ripl.c:15:5: warning: implicit declaration of function ‘ripl_backend_init’; did you mean ‘ripl_node_init’? [-Wimplicit-function-declaration]
+     ripl_backend_init(&ripl->backend, ripl_callback, (void *) ripl);
+     ^~~~~~~~~~~~~~~~~
+     ripl_node_init
+In file included from src/ripl.h:4,
+                 from main.c:4:
+src/backend/backend.h:8:40: error: unknown type name ‘Ripl_Audio_Buffer’
+     int (*user_callback)(void *, const Ripl_Audio_Buffer*, Ripl_Audio_Buffer*),
+                                        ^~~~~~~~~~~~~~~~~
+src/backend/backend.h:8:60: error: unknown type name ‘Ripl_Audio_Buffer’
+     int (*user_callback)(void *, const Ripl_Audio_Buffer*, Ripl_Audio_Buffer*),
+                                                            ^~~~~~~~~~~~~~~~~
+src/backend/backend.h:10:1: warning: no semicolon at end of struct or union
+ } Ripl_Backend;
+ ^
+src/backend/backend.h:13:58: error: unknown type name ‘Ripl_Audio_Buffer’
+                       int (*user_callback)(void *, const Ripl_Audio_Buffer*,
+                                                          ^~~~~~~~~~~~~~~~~
+src/backend/backend.h:14:23: error: unknown type name ‘Ripl_Audio_Buffer’
+                       Ripl_Audio_Buffer*), void *user_data);
+                       ^~~~~~~~~~~~~~~~~
+src/backend/backend.h:14:44: error: expected ‘;’, ‘,’ or ‘)’ before ‘void’
+                       Ripl_Audio_Buffer*), void *user_data);
+                                            ^~~~
+make: *** [Makefile:2: default] Error 1

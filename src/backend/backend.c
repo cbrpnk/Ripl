@@ -2,7 +2,8 @@
 #include "backend.h"
 
 int ripl_backend_init(Ripl_Backend *backend,
-                      int (*user_callback)(const void*, void*, unsigned long, void*),
+                      int (*user_callback)(void *, const Ripl_Audio_Buffer*,
+                      Ripl_Audio_Buffer*),
                       void *user_data)
 {
     PaError err = Pa_Initialize();
@@ -54,10 +55,18 @@ int ripl_backend_close_device(Ripl_Backend *backend)
 }
 
 int ripl_backend_callback(const void *input_buffer, void *output_buffer,
-           unsigned long frame_per_buffer, const PaStreamCallbackTimeInfo *time_info,
-           PaStreamCallbackFlags status_flags, void *user_data)
+                          unsigned long n_frames, const PaStreamCallbackTimeInfo *time_info,
+                          PaStreamCallbackFlags status_flags, void *user_data)
 {
     Ripl_Backend *backend = (Ripl_Backend *) user_data;
-    return backend->user_callback(input_buffer,  output_buffer, frame_per_buffer,
-                                  backend->user_data);
+    Ripl_Audio_Buffer in = {
+        .size = n_frames,
+        .buffer = (Ripl_Audio_Frame *) input_buffer
+    };
+    Ripl_Audio_Buffer out = {
+        .size = n_frames,
+        .buffer = (Ripl_Audio_Frame *) output_buffer
+    };
+    
+    return backend->user_callback(backend->user_data, (const Ripl_Audio_Buffer*) &in, &out);
 }
