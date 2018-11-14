@@ -11,8 +11,8 @@ int ripl_graph_init(Ripl_Graph *graph, unsigned int sample_rate, unsigned int bu
     // TODO The following is too much of a hack for my taste 
     // (Getting a dummy node that does nothing but nevertheless be interconnected in
     // the graph)
-    ripl_node_init(&graph->master_in, 0, 0, 0);
-    ripl_node_init(&graph->master_out, 0, 0, 0);
+    ripl_node_init(&graph->master_in, graph, RIPL_DUMMY);
+    ripl_node_init(&graph->master_out, graph, RIPL_DUMMY);
     return 0;
 }
 
@@ -28,19 +28,16 @@ int ripl_graph_cleanup(Ripl_Graph *graph)
     return 0;
 }
 
-int ripl_graph_send(Ripl_Graph *graph, Ripl_Node *from, Ripl_Node *to,
-                       unsigned int input)
+int ripl_graph_gen_sigpath(Ripl_Graph *graph)
 {
-    ripl_node_send(from, to, input);
-    // We've change the signal path so we reorder
-    ripl_graph_gen_sigpath(graph, &graph->master_out);
+    ripl_graph_gen_sigpath_recursive(graph, &graph->master_out);
     return 0;
 }
 
-int ripl_graph_gen_sigpath(Ripl_Graph *graph, Ripl_Node *root)
+int ripl_graph_gen_sigpath_recursive(Ripl_Graph *graph, Ripl_Node *root)
 {
     // Recusively go through the graph and build a signal path in a depth first fashion
-    for(int i=0; i<root->n_inputs; ++i) {
+    for(int i=0; i<root->processor.n_inputs; ++i) {
         if(root->input_nodes[i] != NULL) {
             // Search node in path
             unsigned int in_path = 0;
@@ -52,7 +49,7 @@ int ripl_graph_gen_sigpath(Ripl_Graph *graph, Ripl_Node *root)
             }
             
             if(!in_path) {
-                ripl_graph_gen_sigpath(graph, root->input_nodes[i]);
+                ripl_graph_gen_sigpath_recursive(graph, root->input_nodes[i]);
             }
         }
     }
@@ -78,10 +75,10 @@ int ripl_graph_process(Ripl_Graph *graph, const Ripl_Audio_Buffer *in,
     return 0;
 }
 
-Ripl_Node *ripl_graph_add(Ripl_Graph *graph, Ripl_Node_Type type)
+Ripl_Node *ripl_graph_add(Ripl_Graph *graph, Ripl_Processor_Type type)
 {
     Ripl_Node *node = (Ripl_Node *) malloc(sizeof(Ripl_Node));
     graph->nodes[graph->n_nodes++] = node;
-    ripl_node_init(node, type, graph->sample_rate, graph->buffer_size);
+    ripl_node_init(node, graph, type);
     return node;
 }

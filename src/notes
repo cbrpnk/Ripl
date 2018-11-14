@@ -1,7 +1,0 @@
-Create a processor struct
-put synth... into processors folder
-make nodes contain a processor
-Let ripl.c ripl_synth() create a processor, and call graph_add_processor()
-That way graph and node just work with abstract processors and don't know about synth
-
-Set pointers to NULL / calloc?

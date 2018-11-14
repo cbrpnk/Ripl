@@ -8,6 +8,7 @@ int ripl_dummy_init(Ripl_Dummy *dummy)
 {
     // Params
     dummy->params[0] = &dummy->dummy;
+    dummy->dummy = 0;
     return 0;
 }
 

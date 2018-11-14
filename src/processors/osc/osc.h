@@ -8,15 +8,14 @@ typedef enum Ripl_Osc_Input {
     RIPL_OSC_IN_COUNT
 } Ripl_Osc_Input;
 
-typedef enum Ripl_Osc_Param_Name {
+typedef enum Ripl_Osc_Param {
     RIPL_OSC_FREQ = 0,
     RIPL_OSC_PARAM_COUNT
-} Ripl_Osc_Param_Name;
+} Ripl_Osc_Param;
 
 typedef struct Ripl_Osc {
-    // Array of pointer to parameters controllable by the user
-    float *params[RIPL_OSC_PARAM_COUNT];
-    float freq;
+    Ripl_Param  *params[RIPL_OSC_PARAM_COUNT];
+    Ripl_Param freq;
     unsigned int sample_rate;
     float phase;
 } Ripl_Osc;

@@ -2,7 +2,6 @@
 #define RIPL_GRAPH_H
 
 #include "node.h"
-#include "osc/osc.h"
 
 #define RIPL_MAX_NODES 256
 
@@ -28,18 +27,15 @@ typedef struct Ripl_Graph {
 int ripl_graph_init(Ripl_Graph *graph, unsigned int sample_rate, unsigned int buffer_size);
 int ripl_graph_cleanup(Ripl_Graph *graph);
 
-// When the node connections are mutated, ripl_graph_order should be called
-int ripl_graph_send(Ripl_Graph *graph, Ripl_Node *source, Ripl_Node *dest,
-                       unsigned int input);
-
 // Put the nodes in the order they should be executed in
-int ripl_graph_gen_sigpath(Ripl_Graph *graph, Ripl_Node *root);
+int ripl_graph_gen_sigpath(Ripl_Graph *graph);
+int ripl_graph_gen_sigpath_recursive(Ripl_Graph *graph, Ripl_Node *root);
 
 // Goes through the graph and execute the nodes.
 int ripl_graph_process(Ripl_Graph *graph, const Ripl_Audio_Buffer *in,
                        Ripl_Audio_Buffer *out);
 
 // Add nodes
-Ripl_Node *ripl_graph_add(Ripl_Graph *graph, Ripl_Node_Type type);
+Ripl_Node *ripl_graph_add(Ripl_Graph *graph, Ripl_Processor_Type type);
 
 #endif

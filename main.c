@@ -14,12 +14,12 @@ int main(int arch, char **argv)
 {
     signal(SIGINT, signal_handler);
     
-    Ripl      *ripl  = ripl_init(44100, 256);
-    Ripl_Node *out   = ripl_master_out(ripl);
-    Ripl_Node *osc = ripl_osc(ripl);
+    Ripl      *ripl = ripl_init(44100, 256);
+    Ripl_Node *out  = ripl_master_out(ripl);
+    Ripl_Node *osc  = ripl_osc(ripl);
     
     ripl_set(osc, RIPL_OSC_FREQ, 120.0f);
-    ripl_send(ripl, osc, out, 0); // TODO have a pointer to graph in node (dont pass ripl)
+    ripl_send(osc, out, 0);
     
     ripl_play(ripl);
     while(running) sleep(1);

@@ -12,8 +12,7 @@
 #define RIPL_DUMMY_PARAM_COUNT 1
 
 typedef struct Ripl_Dummy {
-    // Array of pointer to parameters controllable by the user
-    float *params[RIPL_DUMMY_PARAM_COUNT];
+    Ripl_Param *params[RIPL_DUMMY_PARAM_COUNT];
     float dummy;
 } Ripl_Dummy;
 
