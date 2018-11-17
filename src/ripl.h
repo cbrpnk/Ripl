@@ -3,17 +3,23 @@
 
 #include "backend/backend.h"
 #include "graph.h"
+#include "midi.h"
 #include "processors/osc.h"
 
 #define RIPL_MAX_NODES 256
 
 typedef struct Ripl {
-    unsigned int playing;
     Ripl_Backend backend;
     Ripl_Graph   graph;
+    unsigned int playing;
+    // Midi stuff
+    unsigned long long play_head; // Current frame
+    float bpm;
+    void (*user_callback)();
 } Ripl;
 
-Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size);
+Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size,
+                void(*user_callback)(unsigned long long));
 int   ripl_cleanup(Ripl *ripl);
 int   ripl_play(Ripl *ripl);
 int   ripl_stop(Ripl *ripl);

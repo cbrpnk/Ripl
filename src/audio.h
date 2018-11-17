@@ -1,6 +1,7 @@
 #ifndef RIPL_AUDIO_H
 #define RIPL_AUDIO_H
 
+
 typedef float Ripl_Param;
 
 typedef struct __attribute__((packed)) Ripl_Audio_Frame {

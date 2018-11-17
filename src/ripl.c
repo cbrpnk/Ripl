@@ -5,17 +5,21 @@
 #include "ripl.h"
 #include "audio.h"
 
-Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size)
+Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size, void (*user_callback)())
 {
     srand(time(NULL));
     
     Ripl *ripl = malloc(sizeof(Ripl));
-    ripl->playing = 0;
     
     ripl_backend_init(&ripl->backend, ripl_callback, (void *) ripl);
     ripl_backend_open_device(&ripl->backend, sample_rate, buffer_size);
     
     ripl_graph_init(&ripl->graph, sample_rate, buffer_size);
+    
+    ripl->playing = 0;
+    ripl->play_head = 0;
+    ripl->bpm = 140;
+    ripl->user_callback = user_callback;
     
     return ripl;
 }
@@ -53,7 +57,10 @@ int ripl_callback(void *user_data, const Ripl_Audio_Buffer *in, Ripl_Audio_Buffe
     memset(out->buffer, 0, sizeof(Ripl_Audio_Frame) * out->size);
     
     if(ripl->playing) {
+        ripl->user_callback(ripl->play_head);
         ripl_graph_process(&ripl->graph, (const Ripl_Audio_Buffer *) in, out);
+        // Advance time forward by the size of the buffer
+        ripl->play_head += out->size;
     }
     return 0;
 }
