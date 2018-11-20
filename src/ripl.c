@@ -18,6 +18,8 @@ Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size, void (*user_
     
     ripl->playing = 0;
     ripl->play_head = 0;
+    ripl->time = 0;
+    ripl->beat = 0;
     ripl->bpm = 140;
     ripl->user_callback = user_callback;
     
@@ -61,6 +63,8 @@ int ripl_callback(void *user_data, const Ripl_Audio_Buffer *in, Ripl_Audio_Buffe
         ripl_graph_process(&ripl->graph, (const Ripl_Audio_Buffer *) in, out);
         // Advance time forward by the size of the buffer
         ripl->play_head += out->size;
+        ripl->time = (float) ripl->play_head / ripl->graph.sample_rate;
+        ripl->beat = ripl->time / 60.0 * ripl->bpm;
     }
     return 0;
 }

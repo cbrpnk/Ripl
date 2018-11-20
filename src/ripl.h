@@ -14,6 +14,8 @@ typedef struct Ripl {
     unsigned int playing;
     // Midi stuff
     unsigned long long play_head; // Current frame
+    double time; // Current time in seconds
+    double beat; // Current beat
     float bpm;
     void (*user_callback)();
 } Ripl;

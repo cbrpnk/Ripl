@@ -26,8 +26,9 @@ void signal_handler(int signal)
 void callback(unsigned long long current_frame)
 {
     lua_getglobal(L, "loop");
-    lua_pushnumber(L, current_frame);
-    lua_call(L, 1, 0);
+    lua_pushnumber(L, ripl->time);
+    lua_pushnumber(L, ripl->beat);
+    lua_call(L, 2, 0);
 }
 
 /******* Lua Bindings ************/
