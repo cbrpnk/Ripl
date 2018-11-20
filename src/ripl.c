@@ -67,12 +67,12 @@ int ripl_callback(void *user_data, const Ripl_Audio_Buffer *in, Ripl_Audio_Buffe
 
 Ripl_Node *ripl_master_in(Ripl *ripl)
 {
-    return &ripl->graph.master_in;
+    return ripl->graph.master_in;
 }
 
 Ripl_Node *ripl_master_out(Ripl *ripl)
 {
-    return &ripl->graph.master_out;
+    return ripl->graph.master_out;
 }
 
 Ripl_Node *ripl_osc(Ripl *ripl)

@@ -8,8 +8,8 @@ int ripl_graph_init(Ripl_Graph *graph, unsigned int sample_rate, unsigned int bu
     graph->buffer_size = buffer_size;
     graph->n_nodes = 0;
     graph->signal_path_length = 0;
-    ripl_node_init(&graph->master_in, 0, graph, RIPL_DUMMY);
-    ripl_node_init(&graph->master_out, 1, graph, RIPL_DUMMY);
+    graph->master_in = ripl_graph_add(graph, RIPL_DUMMY);
+    graph->master_out = ripl_graph_add(graph, RIPL_DUMMY);
     return 0;
 }
 
@@ -19,15 +19,12 @@ int ripl_graph_cleanup(Ripl_Graph *graph)
         ripl_node_cleanup(graph->nodes[i]);
         free(graph->nodes[i]);
     }
-    
-    ripl_node_cleanup(&graph->master_in);
-    ripl_node_cleanup(&graph->master_out);
     return 0;
 }
 
 int ripl_graph_gen_sigpath(Ripl_Graph *graph)
 {
-    ripl_graph_gen_sigpath_recursive(graph, &graph->master_out);
+    ripl_graph_gen_sigpath_recursive(graph, graph->master_out);
     return 0;
 }
 
@@ -65,7 +62,7 @@ int ripl_graph_process(Ripl_Graph *graph, const Ripl_Audio_Buffer *in,
     }
     
     // Copy the output buffer of the node connected to master out into out
-    memcpy(out->buffer, graph->master_out.inputs[0].node->processor.output.buffer,
+    memcpy(out->buffer, graph->master_out->inputs[0].node->processor.output.buffer,
            out->size * sizeof(Ripl_Audio_Frame));
     return 0;
 }
