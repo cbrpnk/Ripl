@@ -1,5 +1,5 @@
 default:
-	gcc -g -O3 -ffast-math -o ripl -lm -lportaudio -lasound -ljack -pthread \
+	gcc -g -O3 -Wall -ffast-math -o ripl -lm -lportaudio -lasound -ljack -pthread -llua \
 	src/backend/backend.c \
 	src/dsp/dummy.c \
 	src/dsp/osc.c \

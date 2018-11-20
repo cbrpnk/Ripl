@@ -2,8 +2,10 @@
 #include "node.h"
 #include "graph.h"
 
-int ripl_node_init(Ripl_Node *node, Ripl_Graph *owner, Ripl_Processor_Type type)
+int ripl_node_init(Ripl_Node *node, Ripl_Node_Id id, Ripl_Graph *owner,
+                   Ripl_Processor_Type type)
 {
+    node->id = id;
     node->owner = owner;
     node->n_inputs = 0;
     node->n_outputs = 0;

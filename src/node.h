@@ -7,6 +7,9 @@
 typedef struct Ripl_Graph Ripl_Graph;
 typedef struct Ripl_Node Ripl_Node;
 
+// Unique identifier to a node
+typedef unsigned int Ripl_Node_Id;
+
 typedef struct Ripl_Edge {
     Ripl_Node *node;
     unsigned int processor_input;
@@ -14,6 +17,7 @@ typedef struct Ripl_Edge {
 
 // Represents a single node in a Ripl_Graph
 typedef struct Ripl_Node {
+    Ripl_Node_Id id;
     Ripl_Graph *owner;
     unsigned int n_inputs;
     unsigned int n_outputs;
@@ -23,7 +27,8 @@ typedef struct Ripl_Node {
     int on;
 } Ripl_Node;
 
-int ripl_node_init(Ripl_Node *node, Ripl_Graph *owner, Ripl_Processor_Type type);
+int ripl_node_init(Ripl_Node *node, Ripl_Node_Id id, Ripl_Graph *owner,
+                   Ripl_Processor_Type type);
 int ripl_node_cleanup(Ripl_Node *node);
 
 int ripl_node_process(Ripl_Node *node);

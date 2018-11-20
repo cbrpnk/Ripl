@@ -8,8 +8,8 @@ int ripl_graph_init(Ripl_Graph *graph, unsigned int sample_rate, unsigned int bu
     graph->buffer_size = buffer_size;
     graph->n_nodes = 0;
     graph->signal_path_length = 0;
-    ripl_node_init(&graph->master_in, graph, RIPL_DUMMY);
-    ripl_node_init(&graph->master_out, graph, RIPL_DUMMY);
+    ripl_node_init(&graph->master_in, 0, graph, RIPL_DUMMY);
+    ripl_node_init(&graph->master_out, 1, graph, RIPL_DUMMY);
     return 0;
 }
 
@@ -73,7 +73,8 @@ int ripl_graph_process(Ripl_Graph *graph, const Ripl_Audio_Buffer *in,
 Ripl_Node *ripl_graph_add(Ripl_Graph *graph, Ripl_Processor_Type type)
 {
     Ripl_Node *node = malloc(sizeof(Ripl_Node));
-    graph->nodes[graph->n_nodes++] = node;
-    ripl_node_init(node, graph, type);
+    graph->nodes[graph->n_nodes] = node;
+    ripl_node_init(node, graph->n_nodes, graph, type);
+    graph->n_nodes++;
     return node;
 }
