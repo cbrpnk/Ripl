@@ -37,4 +37,7 @@ int ripl_graph_process(Ripl_Graph *graph, const Ripl_Audio_Buffer *in,
 // Add nodes
 Ripl_Node *ripl_graph_add(Ripl_Graph *graph, Ripl_Processor_Type type);
 
+// Get node by id
+Ripl_Node *ripl_graph_get_node(Ripl_Graph *graph, Ripl_Node_Id id);
+
 #endif

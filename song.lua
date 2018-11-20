@@ -1,16 +1,10 @@
 function setup()
-    io.write("setup()\n")
     out = master_out()
-    --osc = osc()
-    --mixer = mixer()
+    osc = osc()
     
-    --send(osc, mixer, 0)
-    --send(mixer, out, 0)
-    
-    io.write(out, "\n")
+    send(osc, out, 0)
 end
 
-function loop()
-    --io.write("loop()\n")
-    --set(osc, OSC_FREQ, 65)
+function loop(time)
+    set(osc, 0, math.sin((time/44100)*math.pi*2)*256);
 end

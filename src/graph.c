@@ -75,3 +75,11 @@ Ripl_Node *ripl_graph_add(Ripl_Graph *graph, Ripl_Processor_Type type)
     graph->n_nodes++;
     return node;
 }
+
+Ripl_Node *ripl_graph_get_node(Ripl_Graph *graph, Ripl_Node_Id id)
+{
+    if(id < graph->n_nodes) {
+        return graph->nodes[id];
+    }
+    return NULL;
+}

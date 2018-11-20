@@ -26,25 +26,42 @@ void signal_handler(int signal)
 void callback(unsigned long long current_frame)
 {
     lua_getglobal(L, "loop");
-    lua_call(L, 0, 0);
+    lua_pushnumber(L, current_frame);
+    lua_call(L, 1, 0);
 }
 
-/******* LUA Bindings ************/
+/******* Lua Bindings ************/
 static int ripl_lua_master_out(lua_State *L) {
-    printf("I'm C, called by lua\n");
-    ripl_master_out(ripl);
-    lua_pushnumber(L, 12);
+    Ripl_Node *out = ripl_master_out(ripl);
+    lua_pushnumber(L, out->id);
     return 1;
 }
+
+static int ripl_lua_osc(lua_State *L) {
+    Ripl_Node *osc = ripl_osc(ripl);
+    lua_pushnumber(L, osc->id);
+    return 1;
+}
+
+static int ripl_lua_send(lua_State *L) {
+    Ripl_Node *source = ripl_graph_get_node(&ripl->graph, lua_tonumber(L, 1));
+    Ripl_Node *target = ripl_graph_get_node(&ripl->graph, lua_tonumber(L, 2));
+    unsigned int target_port = lua_tonumber(L, 3);
+    ripl_send(source, target, target_port);
+    return 0;
+}
+
+static int ripl_lua_set(lua_State *L) {
+    Ripl_Node *node = ripl_graph_get_node(&ripl->graph, lua_tonumber(L, 1));
+    ripl_set(node, lua_tonumber(L, 2), lua_tonumber(L, 3));
+    return 0;
+}
+/********* Lua End ***************/
 
 int main(int arch, char **argv)
 {
     signal(SIGINT, signal_handler);
     ripl = ripl_init(SR, 256, callback);
-    // TODO Do that in the song script
-    out  = ripl_master_out(ripl);
-    osc  = ripl_osc(ripl);
-    ripl_send(osc, out, 0);
     
     // Init lua
     L = luaL_newstate();
@@ -52,6 +69,9 @@ int main(int arch, char **argv)
     
     // Reigster our bindings
     lua_register(L, "master_out", ripl_lua_master_out);
+    lua_register(L, "osc", ripl_lua_osc);
+    lua_register(L, "send", ripl_lua_send);
+    lua_register(L, "set", ripl_lua_set);
     
     // Load song script
     luaL_loadfile(L, "song.lua");
