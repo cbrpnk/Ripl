@@ -62,8 +62,10 @@ int snd_graph_process(Snd_Graph *graph, const Snd_Audio_Buffer *in,
     }
     
     // Copy the output buffer of the node connected to master out into out
-    memcpy(out->buffer, graph->master_out->inputs[0].node->processor.output.buffer,
-           out->size * sizeof(Snd_Audio_Frame));
+    if(graph->master_out->n_inputs > 0) {
+        memcpy(out->buffer, graph->master_out->inputs[0].node->processor.output.buffer,
+               out->size * sizeof(Snd_Audio_Frame));
+    }
     return 0;
 }
 
