@@ -10,4 +10,4 @@ default:
 	src/snd/node.c \
 	src/snd/snd.c \
 	src/main.c \
-	&& ./ripl
+	&& ./ripl song.lua
