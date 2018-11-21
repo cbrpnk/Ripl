@@ -1,14 +1,21 @@
-function setup()
-    out = master_out()
-    osc = osc()
-    send(osc, out, 0)
-    melody = {[0] = 65, [1] = 33, [2] = 44, [3] = 75}
-end
+-- TODO Should be in a lib somewhere
 
-function midiToFreq(note)
+OSC_FREQ = 0
+
+function midiToHz(note)
     return 440 * 2^((note-69)/12)
 end
 
+masterOut = masterOut()
+-- End lib
+
+
+function setup()
+    osc = osc()
+    send(osc, masterOut, 0)
+    melody = {[0] = 65, [1] = 33, [2] = 44, [3] = 75}
+end
+
 function loop(time, beat)
-    set(osc, 0, midiToFreq(melody[math.floor(beat*2)%#melody]))
+    set(osc, OSC_FREQ, midiToHz(melody[math.floor(beat)%#melody]))
 end

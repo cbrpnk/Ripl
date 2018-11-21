@@ -5,7 +5,8 @@
 #include "ripl.h"
 #include "audio.h"
 
-Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size, void (*user_callback)())
+Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size,
+                void (*user_callback)(void *), void *user_data)
 {
     srand(time(NULL));
     
@@ -22,6 +23,7 @@ Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size, void (*user_
     ripl->beat = 0;
     ripl->bpm = 140;
     ripl->user_callback = user_callback;
+    ripl->user_data = user_data;
     
     return ripl;
 }
@@ -59,7 +61,7 @@ int ripl_callback(void *user_data, const Ripl_Audio_Buffer *in, Ripl_Audio_Buffe
     memset(out->buffer, 0, sizeof(Ripl_Audio_Frame) * out->size);
     
     if(ripl->playing) {
-        ripl->user_callback(ripl->play_head);
+        ripl->user_callback(ripl->user_data);
         ripl_graph_process(&ripl->graph, (const Ripl_Audio_Buffer *) in, out);
         // Advance time forward by the size of the buffer
         ripl->play_head += out->size;

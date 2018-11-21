@@ -18,10 +18,11 @@ typedef struct Ripl {
     double beat; // Current beat
     float bpm;
     void (*user_callback)();
+    void *user_data;
 } Ripl;
 
 Ripl *ripl_init(unsigned int sample_rate, unsigned int buffer_size,
-                void(*user_callback)(unsigned long long));
+                void(*user_callback)(void *), void *user_data);
 int   ripl_cleanup(Ripl *ripl);
 int   ripl_play(Ripl *ripl);
 int   ripl_stop(Ripl *ripl);
