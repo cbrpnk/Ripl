@@ -2,33 +2,33 @@
 #include <string.h>
 #include "graph.h"
 
-int ripl_graph_init(Ripl_Graph *graph, unsigned int sample_rate, unsigned int buffer_size)
+int snd_graph_init(Snd_Graph *graph, unsigned int sample_rate, unsigned int buffer_size)
 {
     graph->sample_rate = sample_rate;
     graph->buffer_size = buffer_size;
     graph->n_nodes = 0;
     graph->signal_path_length = 0;
-    graph->master_in = ripl_graph_add(graph, RIPL_DUMMY);
-    graph->master_out = ripl_graph_add(graph, RIPL_DUMMY);
+    graph->master_in = snd_graph_add(graph, SND_DUMMY);
+    graph->master_out = snd_graph_add(graph, SND_DUMMY);
     return 0;
 }
 
-int ripl_graph_cleanup(Ripl_Graph *graph)
+int snd_graph_cleanup(Snd_Graph *graph)
 {
     for(int i=0; i<graph->n_nodes; ++i) {
-        ripl_node_cleanup(graph->nodes[i]);
+        snd_node_cleanup(graph->nodes[i]);
         free(graph->nodes[i]);
     }
     return 0;
 }
 
-int ripl_graph_gen_sigpath(Ripl_Graph *graph)
+int snd_graph_gen_sigpath(Snd_Graph *graph)
 {
-    ripl_graph_gen_sigpath_recursive(graph, graph->master_out);
+    snd_graph_gen_sigpath_recursive(graph, graph->master_out);
     return 0;
 }
 
-int ripl_graph_gen_sigpath_recursive(Ripl_Graph *graph, Ripl_Node *root)
+int snd_graph_gen_sigpath_recursive(Snd_Graph *graph, Snd_Node *root)
 {
     // Recusively go through the graph and build a signal path in a depth first fashion
     for(int i=0; i<root->n_inputs; ++i) {
@@ -42,7 +42,7 @@ int ripl_graph_gen_sigpath_recursive(Ripl_Graph *graph, Ripl_Node *root)
         }
         
         if(!in_path) {
-            ripl_graph_gen_sigpath_recursive(graph, root->inputs[i].node);
+            snd_graph_gen_sigpath_recursive(graph, root->inputs[i].node);
         }
     }
     
@@ -52,31 +52,31 @@ int ripl_graph_gen_sigpath_recursive(Ripl_Graph *graph, Ripl_Node *root)
     return 0;
 }
 
-int ripl_graph_process(Ripl_Graph *graph, const Ripl_Audio_Buffer *in,
-                       Ripl_Audio_Buffer *out)
+int snd_graph_process(Snd_Graph *graph, const Snd_Audio_Buffer *in,
+                       Snd_Audio_Buffer *out)
 {
     // TODO Set master_in to in
 
     for(int i=0; i<graph->signal_path_length; ++i) {
-        ripl_node_process(graph->signal_path[i]);
+        snd_node_process(graph->signal_path[i]);
     }
     
     // Copy the output buffer of the node connected to master out into out
     memcpy(out->buffer, graph->master_out->inputs[0].node->processor.output.buffer,
-           out->size * sizeof(Ripl_Audio_Frame));
+           out->size * sizeof(Snd_Audio_Frame));
     return 0;
 }
 
-Ripl_Node *ripl_graph_add(Ripl_Graph *graph, Ripl_Processor_Type type)
+Snd_Node *snd_graph_add(Snd_Graph *graph, Snd_Processor_Type type)
 {
-    Ripl_Node *node = malloc(sizeof(Ripl_Node));
+    Snd_Node *node = malloc(sizeof(Snd_Node));
     graph->nodes[graph->n_nodes] = node;
-    ripl_node_init(node, graph->n_nodes, graph, type);
+    snd_node_init(node, graph->n_nodes, graph, type);
     graph->n_nodes++;
     return node;
 }
 
-Ripl_Node *ripl_graph_get_node(Ripl_Graph *graph, Ripl_Node_Id id)
+Snd_Node *snd_graph_get_node(Snd_Graph *graph, Snd_Node_Id id)
 {
     if(id < graph->n_nodes) {
         return graph->nodes[id];

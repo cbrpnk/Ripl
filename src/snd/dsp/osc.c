@@ -7,7 +7,7 @@
 #define PI  3.14159265359
 #define TAU 6.28318530718
 
-int ripl_osc_init(Ripl_Osc *osc, unsigned int sample_rate)
+int snd_osc_init(Snd_Osc *osc, unsigned int sample_rate)
 {
     osc->sample_rate = sample_rate;
     osc->phase = 0.0f;
@@ -15,14 +15,14 @@ int ripl_osc_init(Ripl_Osc *osc, unsigned int sample_rate)
     return 0;
 }
 
-int ripl_osc_cleanup(Ripl_Osc *osc)
+int snd_osc_cleanup(Snd_Osc *osc)
 {
     return 0;
 }
 
-int ripl_osc_process(void *data, const Ripl_Audio_Buffer **in, Ripl_Audio_Buffer *out)
+int snd_osc_process(void *data, const Snd_Audio_Buffer **in, Snd_Audio_Buffer *out)
 {
-    Ripl_Osc *osc = (Ripl_Osc *) data;
+    Snd_Osc *osc = (Snd_Osc *) data;
     
     float phase_increment = (TAU * osc->freq) / osc->sample_rate;
     

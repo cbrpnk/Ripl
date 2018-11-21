@@ -1,13 +1,13 @@
 default:
 	gcc -g -O3 -Wall -ffast-math -o ripl -lm -lportaudio -lasound -ljack -pthread -llua \
-	src/backend/backend.c \
-	src/dsp/dummy.c \
-	src/dsp/osc.c \
-	src/processors/osc.c \
-	src/processors/dummy.c \
-	src/processors/processor.c \
-	src/graph.c \
-	src/node.c \
-	src/ripl.c \
-	main.c \
+	src/snd/backend/backend.c \
+	src/snd/dsp/dummy.c \
+	src/snd/dsp/osc.c \
+	src/snd/processors/osc.c \
+	src/snd/processors/dummy.c \
+	src/snd/processors/processor.c \
+	src/snd/graph.c \
+	src/snd/node.c \
+	src/snd/snd.c \
+	src/main.c \
 	&& ./ripl
