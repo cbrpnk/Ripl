@@ -23,10 +23,10 @@ typedef struct Snd {
 
 Snd *snd_init(unsigned int sample_rate, unsigned int buffer_size,
                 void(*user_callback)(void *), void *user_data);
-int   snd_cleanup(Snd *snd);
-int   snd_play(Snd *snd);
-int   snd_stop(Snd *snd);
-int   snd_callback(void *user_data, const Snd_Audio_Buffer *in, Snd_Audio_Buffer *out);
+int  snd_cleanup(Snd *snd);
+int  snd_play(Snd *snd);
+int  snd_stop(Snd *snd);
+int  snd_callback(void *user_data, const Snd_Audio_Buffer *in, Snd_Audio_Buffer *out);
 
 // Add nodes to graph
 Snd_Node *snd_master_in(Snd *snd);
