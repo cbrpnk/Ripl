@@ -13,6 +13,14 @@ int snd_graph_init(Snd_Graph *graph, unsigned int sample_rate, unsigned int buff
     return 0;
 }
 
+// TODO Reset should be passed sample rate and buffer size, init should only allocate mem
+int snd_graph_reset(Snd_Graph *graph)
+{
+    snd_graph_cleanup(graph);
+    snd_graph_init(graph, graph->sample_rate, graph->buffer_size);
+    return 0;
+}
+
 int snd_graph_cleanup(Snd_Graph *graph)
 {
     for(int i=0; i<graph->n_nodes; ++i) {

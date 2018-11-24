@@ -33,6 +33,9 @@ Snd_Node *snd_master_in(Snd *snd);
 Snd_Node *snd_master_out(Snd *snd);
 Snd_Node *snd_osc(Snd *snd);
 
+// Reset Graph
+int snd_reset_graph(Snd *snd);
+
 // Shortcut to snd_node_send
 int snd_send(Snd_Node *source, Snd_Node *dest, unsigned int dest_input);
 

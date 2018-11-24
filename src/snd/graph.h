@@ -24,6 +24,8 @@ typedef struct Snd_Graph {
 } Snd_Graph;
 
 int snd_graph_init(Snd_Graph *graph, unsigned int sample_rate, unsigned int buffer_size);
+// TODO Reset should be passed sample rate and buffer size, init should only allocate mem
+int snd_graph_reset(Snd_Graph *graph);
 int snd_graph_cleanup(Snd_Graph *graph);
 
 // Put the nodes in the order they should be executed in

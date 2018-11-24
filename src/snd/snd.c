@@ -30,26 +30,32 @@ Snd *snd_init(unsigned int sample_rate, unsigned int buffer_size,
 
 int snd_cleanup(Snd *snd)
 {
-    snd_stop(snd);
-    
-    snd_backend_close_device(&snd->backend);
-    snd_backend_cleanup(&snd->backend);
-    
-    snd_graph_cleanup(&snd->graph);
-    
-    free(snd);
+    if(snd != NULL) {
+        snd_stop(snd);
+
+        snd_backend_close_device(&snd->backend);
+        snd_backend_cleanup(&snd->backend);
+
+        snd_graph_cleanup(&snd->graph);
+
+        free(snd);
+    }
     return 0;
 }
 
 int snd_play(Snd *snd)
 {
-    snd->playing = 1;
+    if(snd != NULL) {
+        snd->playing = 1;
+    }
     return 0;
 }
 
 int snd_stop(Snd *snd)
 {
-    snd->playing = 0;
+    if(snd != NULL) {
+        snd->playing = 0;
+    }
     return 0;
 }
 
@@ -84,6 +90,12 @@ Snd_Node *snd_master_out(Snd *snd)
 Snd_Node *snd_osc(Snd *snd)
 {
     return snd_graph_add(&snd->graph, SND_OSC);
+}
+
+// Reset Graph
+int snd_reset_graph(Snd *snd)
+{
+    return snd_graph_reset(&snd->graph);
 }
 
 // Shortcut to snd_node_send

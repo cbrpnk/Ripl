@@ -13,7 +13,7 @@ masterOut = masterOut()
 function setup()
     osc = osc()
     send(osc, masterOut, 0)
-    melody = {[0] = 65, [1] = 33, [2] = 44, [3] = 75}
+    melody = {[0] = 60, [1] = 40, [2] = 43, [3] = 75}
 end
 
 function loop(time, beat)
