@@ -9,37 +9,37 @@
 #define SND_MAX_NODES 256
 
 typedef struct Snd {
-    Snd_Backend backend;
-    Snd_Graph   graph;
+    SndBackend backend;
+    SndGraph   graph;
     unsigned int playing;
     // Midi stuff
-    unsigned long long play_head; // Current frame
+    unsigned long long playHead; // Current frame
     double time; // Current time in seconds
     double beat; // Current beat
     float bpm;
-    void (*user_callback)();
-    void *user_data;
+    void (*userCallback)();
+    void *userData;
 } Snd;
 
-Snd *snd_init(unsigned int sample_rate, unsigned int buffer_size,
-                void(*user_callback)(void *), void *user_data);
-int  snd_cleanup(Snd *snd);
-int  snd_play(Snd *snd);
-int  snd_stop(Snd *snd);
-int  snd_callback(void *user_data, const Snd_Audio_Buffer *in, Snd_Audio_Buffer *out);
+Snd *sndInit(unsigned int sampleRate, unsigned int bufferSize,
+                void(*userCallback)(void *), void *userData);
+int  sndCleanup(Snd *snd);
+int  sndPlay(Snd *snd);
+int  sndStop(Snd *snd);
+int  sndCallback(void *userData, const SndAudioBuffer *in, SndAudioBuffer *out);
 
 // Add nodes to graph
-Snd_Node *snd_master_in(Snd *snd);
-Snd_Node *snd_master_out(Snd *snd);
-Snd_Node *snd_osc(Snd *snd);
+SndNode *sndMasterIn(Snd *snd);
+SndNode *sndMasterOut(Snd *snd);
+SndNode *sndOsc(Snd *snd);
 
 // Reset Graph
-int snd_reset_graph(Snd *snd);
+int sndResetGraph(Snd *snd);
 
-// Shortcut to snd_node_send
-int snd_send(Snd_Node *source, Snd_Node *dest, unsigned int dest_input);
+// Shortcut to sndNodeSend
+int sndSend(SndNode *source, SndNode *dest, unsigned int destInput);
 
-// Shortcut to snd_node_set
-int snd_set(Snd_Node *node, unsigned int param, float value);
+// Shortcut to sndNodeSet
+int sndSet(SndNode *node, unsigned int param, float value);
 
 #endif

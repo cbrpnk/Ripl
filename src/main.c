@@ -15,7 +15,7 @@
 
 unsigned int running = 1;
 
-void signal_handler(int signal)
+void signalHandler(int signal)
 {
     if(signal == SIGINT) running = 0;
 }
@@ -29,7 +29,7 @@ void callback(void *data)
     lua_call(ripl->lua, 2, 0);
 }
 
-void load_script(Ripl *ripl, char *path)
+void loadScript(Ripl *ripl, char *path)
 {
     ripl->lua = luaL_newstate();
     luaL_openlibs(ripl->lua);
@@ -39,7 +39,7 @@ void load_script(Ripl *ripl, char *path)
     lua_setglobal(ripl->lua, "snd");
 
     // Reigster our bindings
-    snd_lua_register_bindings(ripl);
+    sndLuaRegisterBindings(ripl);
 
     // Load lua script passed as parameter
     luaL_loadfile(ripl->lua, path);
@@ -54,32 +54,32 @@ void load_script(Ripl *ripl, char *path)
 int main(int argc, char **argv)
 {
     if(argc == 2) {
-        signal(SIGINT, signal_handler);
+        signal(SIGINT, signalHandler);
         Ripl ripl;
         // Put this in an init function
-        ripl.snd = snd_init(44100, 256, callback, &ripl);
+        ripl.snd = sndInit(44100, 256, callback, &ripl);
         ripl.lua = luaL_newstate();
         
-        time_t last_reload = 0;
+        time_t lastReload = 0;
         while(running) {
             struct stat result;
             if(stat(argv[1], &result) == 0) {
-                time_t last_mod = result.st_mtime;
+                time_t lastMod = result.st_mtime;
                 
-                if(last_mod > last_reload) {
-                    snd_stop(ripl.snd);
-                    snd_reset_graph(ripl.snd);
+                if(lastMod > lastReload) {
+                    sndStop(ripl.snd);
+                    sndResetGraph(ripl.snd);
                     lua_close(ripl.lua);
-                    load_script(&ripl, argv[1]);
-                    snd_play(ripl.snd);
-                    last_reload = last_mod;
+                    loadScript(&ripl, argv[1]);
+                    sndPlay(ripl.snd);
+                    lastReload = lastMod;
                 }
             }
             sleep(1);
         }
         
         // Cleanup
-        snd_cleanup(ripl.snd);
+        sndCleanup(ripl.snd);
         lua_close(ripl.lua);
     }
     return 0;

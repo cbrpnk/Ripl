@@ -3,31 +3,31 @@
 
 #include "../audio.h"
 
-typedef enum Snd_Processor_Type {
+typedef enum SndProcessorType {
     SND_DUMMY = 0,
     SND_OSC
-} Snd_Processor_Type;
+} SndProcessorType;
 
-typedef struct Snd_Processor {
+typedef struct SndProcessor {
     void *obj;
-    Snd_Param **params;
-    int (*process_func)(void*, const Snd_Audio_Buffer**, Snd_Audio_Buffer*);
-    unsigned int n_inputs;
+    SndParam **params;
+    int (*processFunc)(void*, const SndAudioBuffer**, SndAudioBuffer*);
+    unsigned int nInputs;
     // Array of inputs to be passed to process func
-    Snd_Audio_Buffer **inputs;
-    // Output to be passed to process_func
-    Snd_Audio_Buffer output;
-} Snd_Processor;
+    SndAudioBuffer **inputs;
+    // Output to be passed to processFunc
+    SndAudioBuffer output;
+} SndProcessor;
 
-int snd_processor_init(Snd_Processor *processor, Snd_Processor_Type type,
-                        unsigned int sample_rate, unsigned int buffer_size);
-int snd_processor_cleanup(Snd_Processor *processor);
-int snd_processor_set_input(Snd_Processor *processor, unsigned int index,
-                             Snd_Audio_Buffer *input);
-int snd_processor_set_param(Snd_Processor *processor, unsigned int param, float value);
-int snd_processor_process(Snd_Processor *processor);
+int sndProcessorInit(SndProcessor *processor, SndProcessorType type,
+                        unsigned int sampleRate, unsigned int bufferSize);
+int sndProcessorCleanup(SndProcessor *processor);
+int sndProcessorSetInput(SndProcessor *processor, unsigned int index,
+                             SndAudioBuffer *input);
+int sndProcessorSetParam(SndProcessor *processor, unsigned int param, float value);
+int sndProcessorProcess(SndProcessor *processor);
 
 // Init functions for all our processor types
-int snd_processor_dummy_init(Snd_Processor *processor, unsigned int sample_rate);
+int sndProcessorDummyInit(SndProcessor *processor, unsigned int sampleRate);
 
 #endif

@@ -3,25 +3,25 @@
 #include "dummy.h"
 #include "osc.h"
 
-int snd_processor_init(Snd_Processor *processor, Snd_Processor_Type type,
-                        unsigned int sample_rate, unsigned int buffer_size)
+int sndProcessorInit(SndProcessor *processor, SndProcessorType type,
+                        unsigned int sampleRate, unsigned int bufferSize)
 {
     switch(type) {
     case SND_DUMMY:
-        snd_processor_dummy_init(processor, sample_rate);
+        sndProcessorDummyInit(processor, sampleRate);
         break;
     case SND_OSC:
-        snd_processor_osc_init(processor, sample_rate);
+        sndProcessorOscInit(processor, sampleRate);
         break;
     }
-    processor->inputs = malloc(sizeof(Snd_Audio_Buffer*) * processor->n_inputs);
-    processor->output.size = buffer_size;
-    processor->output.buffer = malloc(sizeof(Snd_Audio_Frame) * buffer_size);
+    processor->inputs = malloc(sizeof(SndAudioBuffer*) * processor->nInputs);
+    processor->output.size = bufferSize;
+    processor->output.buffer = malloc(sizeof(SndAudioFrame) * bufferSize);
     
     return 0;
 }
 
-int snd_processor_cleanup(Snd_Processor *processor)
+int sndProcessorCleanup(SndProcessor *processor)
 {
     free(processor->obj);
     free(processor->params); // Initialized in the specific processor init function
@@ -30,22 +30,22 @@ int snd_processor_cleanup(Snd_Processor *processor)
     return 0;
 }
 
-int snd_processor_set_input(Snd_Processor *processor, unsigned int index,
-                             Snd_Audio_Buffer *input)
+int sndProcessorSetInput(SndProcessor *processor, unsigned int index,
+                             SndAudioBuffer *input)
 {
     processor->inputs[index] = input;
     return 0;
 }
 
-int snd_processor_set_param(Snd_Processor *processor, unsigned int param, float value)
+int sndProcessorSetParam(SndProcessor *processor, unsigned int param, float value)
 {
     *(processor->params[param]) = value;
     return 0;
 }
 
-int snd_processor_process(Snd_Processor *processor)
+int sndProcessorProcess(SndProcessor *processor)
 {
-    processor->process_func(processor->obj, (const Snd_Audio_Buffer **) processor->inputs,
+    processor->processFunc(processor->obj, (const SndAudioBuffer **) processor->inputs,
                             &processor->output);
     return 0;
 }

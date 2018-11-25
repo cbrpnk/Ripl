@@ -3,40 +3,40 @@
 #include "processors/processor.h"
 
 // Forward declaration;
-typedef struct Snd_Graph Snd_Graph;
-typedef struct Snd_Node Snd_Node;
+typedef struct SndGraph SndGraph;
+typedef struct SndNode SndNode;
 
 // Unique identifier to a node
-typedef unsigned int Snd_Node_Id;
+typedef unsigned int SndNodeId;
 
-typedef struct Snd_Edge {
-    Snd_Node *node;
-    unsigned int processor_input;
-} Snd_Edge;
+typedef struct SndEdge {
+    SndNode *node;
+    unsigned int processorInput;
+} SndEdge;
 
-// Represents a single node in a Snd_Graph
-typedef struct Snd_Node {
-    Snd_Node_Id id;
-    Snd_Graph *owner;
-    unsigned int n_inputs;
-    unsigned int n_outputs;
-    Snd_Edge *inputs;
-    Snd_Edge *outputs;
-    Snd_Processor processor;
+// Represents a single node in a SndGraph
+typedef struct SndNode {
+    SndNodeId id;
+    SndGraph *owner;
+    unsigned int nInputs;
+    unsigned int nOutputs;
+    SndEdge *inputs;
+    SndEdge *outputs;
+    SndProcessor processor;
     int on;
-} Snd_Node;
+} SndNode;
 
-int snd_node_init(Snd_Node *node, Snd_Node_Id id, Snd_Graph *owner,
-                   Snd_Processor_Type type);
-int snd_node_cleanup(Snd_Node *node);
+int sndNodeInit(SndNode *node, SndNodeId id, SndGraph *owner,
+                   SndProcessorType type);
+int sndNodeCleanup(SndNode *node);
 
-int snd_node_process(Snd_Node *node);
-int snd_node_send(Snd_Node *node, Snd_Node *dest, unsigned int dest_input);
-int snd_node_add_input(Snd_Node *node, Snd_Node *target, unsigned int processor_input);
-int snd_node_add_output(Snd_Node *node, Snd_Node *target, unsigned int processor_input);
-int snd_node_set_param(Snd_Node *node, unsigned int param, float value);
+int sndNodeProcess(SndNode *node);
+int sndNodeSend(SndNode *node, SndNode *dest, unsigned int destInput);
+int sndNodeAddInput(SndNode *node, SndNode *target, unsigned int processorInput);
+int sndNodeAddOutput(SndNode *node, SndNode *target, unsigned int processorInput);
+int sndNodeSetParam(SndNode *node, unsigned int param, float value);
 
-int snd_node_on(Snd_Node *node);
-int snd_node_off(Snd_Node *node);
+int sndNodeOn(SndNode *node);
+int sndNodeOff(SndNode *node);
 
 #endif

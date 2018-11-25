@@ -3,16 +3,16 @@
 #include "../audio.h"
 #include "processor.h"
 
-int snd_processor_osc_init(Snd_Processor *processor, unsigned int sample_rate)
+int sndProcessorOscInit(SndProcessor *processor, unsigned int sampleRate)
 {
-    processor->obj = malloc(sizeof(Snd_Osc));
-    snd_osc_init((Snd_Osc *) processor->obj, sample_rate);
-    processor->process_func = snd_osc_process;
-    processor->n_inputs = SND_OSC_IN_COUNT;
+    processor->obj = malloc(sizeof(SndOsc));
+    sndOscInit((SndOsc *) processor->obj, sampleRate);
+    processor->processFunc = sndOscProcess;
+    processor->nInputs = SND_OSC_IN_COUNT;
     
     // Params
-    Snd_Osc *osc = (Snd_Osc *) processor->obj;
-    processor->params = malloc(SND_OSC_PARAM_COUNT * sizeof(Snd_Param *));
+    SndOsc *osc = (SndOsc *) processor->obj;
+    processor->params = malloc(SND_OSC_PARAM_COUNT * sizeof(SndParam *));
     processor->params[SND_OSC_FREQ] = &osc->freq;
     return 0;
 }

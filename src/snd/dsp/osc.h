@@ -3,20 +3,20 @@
 
 #include "../audio.h"
 
-typedef enum Snd_Osc_Input {
+typedef enum SndOscInput {
     SND_OSC_FM = 0,
     SND_OSC_IN_COUNT
-} Snd_Osc_Input;
+} SndOscInput;
 
-typedef struct Snd_Osc {
-    unsigned int sample_rate;
+typedef struct SndOsc {
+    unsigned int sampleRate;
     float phase;
-    Snd_Param freq;
-} Snd_Osc;
+    SndParam freq;
+} SndOsc;
 
-int snd_osc_init(Snd_Osc *osc, unsigned int sample_rate);
-int snd_osc_cleanup(Snd_Osc *osc);
-int snd_osc_process(void *osc, const Snd_Audio_Buffer **in,
-                       Snd_Audio_Buffer *out);
+int sndOscInit(SndOsc *osc, unsigned int sampleRate);
+int sndSscCleanup(SndOsc *osc);
+int sndOscProcess(void *osc, const SndAudioBuffer **in,
+                       SndAudioBuffer *out);
 
 #endif

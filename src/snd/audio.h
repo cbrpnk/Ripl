@@ -2,17 +2,17 @@
 #define SND_AUDIO_H
 
 
-typedef float Snd_Param;
+typedef float SndParam;
 
-typedef struct __attribute__((packed)) Snd_Audio_Frame {
+typedef struct __attribute__((packed)) SndAudioFrame {
     float left;
     float right;
-} Snd_Audio_Frame;
+} SndAudioFrame;
 
-typedef struct Snd_Audio_Buffer {
+typedef struct SndAudioBuffer {
     unsigned int size; // TODO size_t ?
-    Snd_Audio_Frame *buffer;
-} Snd_Audio_Buffer;
+    SndAudioFrame *buffer;
+} SndAudioBuffer;
 
 
 #endif

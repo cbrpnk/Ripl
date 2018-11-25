@@ -7,37 +7,37 @@
 #include "snd/snd.h"
 #include "ripl.h"
 
-static int snd_lua_master_out(lua_State *L)
+static int sndLuaMasterOut(lua_State *L)
 {
     lua_getglobal(L, "snd");
-    lua_pushlightuserdata(L, snd_master_out(lua_touserdata(L, 1)));
+    lua_pushlightuserdata(L, sndMasterOut(lua_touserdata(L, 1)));
     return 1;
 }
 
-static int snd_lua_osc(lua_State *L)
+static int sndLuaOsc(lua_State *L)
 {
     lua_getglobal(L, "snd");
-    lua_pushlightuserdata(L, snd_osc(lua_touserdata(L, 1)));
+    lua_pushlightuserdata(L, sndOsc(lua_touserdata(L, 1)));
     return 1;
 }
 
-static int snd_lua_send(lua_State *L)
+static int sndLuaSend(lua_State *L)
 {
-    snd_send(lua_touserdata(L, 1), lua_touserdata(L, 2), lua_tonumber(L, 3));
+    sndSend(lua_touserdata(L, 1), lua_touserdata(L, 2), lua_tonumber(L, 3));
     return 0;
 }
 
-static int snd_lua_set(lua_State *L)
+static int sndLuaSet(lua_State *L)
 {
-    snd_set(lua_touserdata(L, 1), lua_tonumber(L, 2), lua_tonumber(L, 3));
+    sndSet(lua_touserdata(L, 1), lua_tonumber(L, 2), lua_tonumber(L, 3));
     return 0;
 }
 
-void snd_lua_register_bindings(Ripl *ripl)
+void sndLuaRegisterBindings(Ripl *ripl)
 {
-    lua_register(ripl->lua, "masterOut", snd_lua_master_out);
-    lua_register(ripl->lua, "osc", snd_lua_osc);
-    lua_register(ripl->lua, "send", snd_lua_send);
-    lua_register(ripl->lua, "set", snd_lua_set);
+    lua_register(ripl->lua, "masterOut", sndLuaMasterOut);
+    lua_register(ripl->lua, "osc", sndLuaOsc);
+    lua_register(ripl->lua, "send", sndLuaSend);
+    lua_register(ripl->lua, "set", sndLuaSet);
 }
 #endif

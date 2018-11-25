@@ -3,10 +3,10 @@
 
 #include "../dsp/dummy.h"
 
-typedef struct Snd_Processor Snd_Processor;
+typedef struct SndProcessor SndProcessor;
 
 #define SND_DUMMY_PARAM_COUNT 1
 
-int snd_processor_dummy_init(Snd_Processor *processor, unsigned int sample_rate);
+int sndProcessorDummyInit(SndProcessor *processor, unsigned int sampleRate);
 
 #endif

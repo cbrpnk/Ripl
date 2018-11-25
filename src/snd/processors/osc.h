@@ -3,13 +3,13 @@
 
 #include "../dsp/osc.h"
 
-typedef struct Snd_Processor Snd_Processor;
+typedef struct SndProcessor SndProcessor;
 
-typedef enum Snd_Processor_Osc_Param {
+typedef enum SndProcessorOscParam {
     SND_OSC_FREQ = 0,
     SND_OSC_PARAM_COUNT
-} Snd_Processor_Osc_Param;
+} SndProcessorOscParam;
 
-int snd_processor_osc_init(Snd_Processor *processor, unsigned int sample_rate);
+int sndProcessorOscInit(SndProcessor *processor, unsigned int sampleRate);
 
 #endif

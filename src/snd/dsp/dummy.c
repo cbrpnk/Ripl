@@ -4,19 +4,19 @@
 
 #include "dummy.h"
 
-int snd_dummy_init(Snd_Dummy *dummy, unsigned int sample_rate)
+int sndDummyInit(SndDummy *dummy, unsigned int sampleRate)
 {
-    dummy->sample_rate = sample_rate;
+    dummy->sampleRate = sampleRate;
     dummy->dummy = 0;
     return 0;
 }
 
-int snd_dummy_cleanup(Snd_Dummy *dummy)
+int sndDummyCleanup(SndDummy *dummy)
 {
     return 0;
 }
 
-int snd_dummy_process(void *data, const Snd_Audio_Buffer **in, Snd_Audio_Buffer *out)
+int sndDummyProcess(void *data, const SndAudioBuffer **in, SndAudioBuffer *out)
 {
     return 0;
 }

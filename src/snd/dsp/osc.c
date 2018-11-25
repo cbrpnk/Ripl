@@ -7,28 +7,28 @@
 #define PI  3.14159265359
 #define TAU 6.28318530718
 
-int snd_osc_init(Snd_Osc *osc, unsigned int sample_rate)
+int sndOscInit(SndOsc *osc, unsigned int sampleRate)
 {
-    osc->sample_rate = sample_rate;
+    osc->sampleRate = sampleRate;
     osc->phase = 0.0f;
     osc->freq = 120.0f;
     return 0;
 }
 
-int snd_osc_cleanup(Snd_Osc *osc)
+int sndOscCleanup(SndOsc *osc)
 {
     return 0;
 }
 
-int snd_osc_process(void *data, const Snd_Audio_Buffer **in, Snd_Audio_Buffer *out)
+int sndOscProcess(void *data, const SndAudioBuffer **in, SndAudioBuffer *out)
 {
-    Snd_Osc *osc = (Snd_Osc *) data;
+    SndOsc *osc = (SndOsc *) data;
     
-    float phase_increment = (TAU * osc->freq) / osc->sample_rate;
+    float phaseIncrement = (TAU * osc->freq) / osc->sampleRate;
     
     for(int i=0; i<out->size; ++i) {
         float sample = sin(osc->phase);
-        osc->phase += phase_increment;
+        osc->phase += phaseIncrement;
         if(osc->phase >= TAU) osc->phase -= TAU;
         
         out->buffer[i].left = sample;
