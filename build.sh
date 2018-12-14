@@ -3,4 +3,4 @@
 mkdir build
 cd build
 cmake ..
-make && ./ripl ../example/song.lua
+make && ./ripl

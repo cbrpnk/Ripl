@@ -67,7 +67,9 @@ int sndCallback(void *userData, const SndAudioBuffer *in, SndAudioBuffer *out)
     memset(out->buffer, 0, sizeof(SndAudioFrame) * out->size);
     
     if(snd->playing) {
-        snd->userCallback(snd->userData);
+        if(snd->userCallback) {
+            snd->userCallback(snd->userData);
+        }
         sndGraphProcess(&snd->graph, (const SndAudioBuffer *) in, out);
         // Advance time forward by the size of the buffer
         snd->playHead += out->size;

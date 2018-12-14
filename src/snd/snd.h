@@ -22,7 +22,7 @@ typedef struct Snd {
 } Snd;
 
 Snd *sndInit(unsigned int sampleRate, unsigned int bufferSize,
-                void(*userCallback)(void *), void *userData);
+             void(*userCallback)(void *), void *userData);
 int  sndCleanup(Snd *snd);
 int  sndPlay(Snd *snd);
 int  sndStop(Snd *snd);
